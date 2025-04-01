@@ -19,4 +19,5 @@ idf_component_register(
         lvgl_esp32_drivers
         esp_timer
         led_pwm
+        wifi
 )
