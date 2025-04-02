@@ -20,4 +20,5 @@ idf_component_register(
         esp_timer
         led_pwm
         wifi
+        mqtt_driver
 )
