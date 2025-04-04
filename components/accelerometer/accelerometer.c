@@ -71,6 +71,13 @@ float acc_get_X()
     return X;
 }
 
+void acc_enable_read(bool enable)
+{
+    // The communication is done when chip select is low
+    // So if enable is true, we set chip select to false == 0
+    SPI_set_cs(!enable);
+}
+
 int dummy_read()
 { // returns 0b00110011 as a set value to check if the reading is correct
     uint8_t who = SPI_read(0x0F);

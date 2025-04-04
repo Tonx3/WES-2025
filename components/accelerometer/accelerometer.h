@@ -27,5 +27,6 @@ float acc_get_Z();
 float acc_get_Y();
 float acc_get_X();
 int dummy_read();
+void acc_enable_read(bool enable);
 
 #endif /*ACCELEROMETER_H*/

@@ -31,6 +31,8 @@
 #define PIN_NUM_MISO 19
 #define PIN_NUM_SCK  18
 #define PIN_NUM_CS   13
+#define PIN_NUM_DISP_CS   0
+#define PIN_NUM_TOUCH_CS  0
 
 #define CLK_SPEED_SPI 1000 * 10
 /*--------------------------- TYPEDEFS AND STRUCTS ---------------------------*/
@@ -59,6 +61,8 @@ void SPI_init()
     ret = spi_bus_add_device(SPI3_HOST, &spi_device_interface_config,
                              &spi_device_handle);
     ESP_ERROR_CHECK(ret);
+
+    SPI_set_cs(true);
 }
 
 uint8_t SPI_transaction(uint8_t address, uint8_t rwb, uint8_t data)
@@ -78,7 +82,7 @@ uint8_t SPI_transaction(uint8_t address, uint8_t rwb, uint8_t data)
     esp_err_t ret;
     ret = spi_device_polling_transmit(spi_device_handle, &spi_transaction);
     ESP_ERROR_CHECK(ret);
-    // printf("recv:%d:%d\n", recieve_buffer[0], recieve_buffer[1]);
+    //printf("recv:%d:%d\n", recieve_buffer[0], recieve_buffer[1]);
     uint8_t recieved_data = 0;
     recieved_data = recieve_buffer[1];
 
@@ -93,4 +97,19 @@ void SPI_write(uint8_t address, uint8_t data)
 uint8_t SPI_read(uint8_t address)
 {
     return SPI_transaction(address, 1, 0x00);
+}
+
+void SPI_set_cs(bool set)
+{
+    gpio_set_level(PIN_NUM_CS, set);
+}
+
+void SPI_set_display_cs(bool set)
+{
+    gpio_set_level(PIN_NUM_DISP_CS, set);
+}
+
+void SPI_set_touch_cs(bool set)
+{
+    gpio_set_level(PIN_NUM_TOUCH_CS, set);
 }
