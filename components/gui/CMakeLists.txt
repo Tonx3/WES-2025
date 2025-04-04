@@ -22,5 +22,6 @@ idf_component_register(
         wifi
         mqtt_driver
         button
-        accelerometer   
+        accelerometer
+        joy
 )

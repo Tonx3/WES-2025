@@ -27,6 +27,7 @@
 #include "accelerometer.h"
 #define LOG_LOCAL_LEVEL ESP_LOG_VERBOSE
 #include "esp_log.h"
+#include "joy.h"
 /*--------------------------- MACROS AND DEFINES -----------------------------*/
 /*--------------------------- TYPEDEFS AND STRUCTS ---------------------------*/
 /*--------------------------- STATIC FUNCTION PROTOTYPES ---------------------*/
@@ -41,21 +42,17 @@ static const char* TAG = "app";
 static void _accel_read_task(void *p_parameter)
 {
 
-    while(true)
+    if(joy_init() != 0)
     {
-        SPI_set_touch_cs(true);
-        SPI_set_display_cs(true);
-        vTaskDelay(1 / portTICK_PERIOD_MS);
-        acc_enable_read(true);
-        float x = acc_get_X();  
-        float y = acc_get_Y();
-        float z = acc_get_Z();
-        acc_enable_read(false);
-        vTaskDelay(1 / portTICK_PERIOD_MS);
-        SPI_set_display_cs(false);
-        SPI_set_touch_cs(false);
-        ESP_LOGI(TAG, "Accelerometer reading... X: %f, Y: %f, Z: %f\n\n", x,y,z);
-        vTaskDelay(50 / portTICK_PERIOD_MS);
+        ESP_LOGE(TAG, "Unable to init adc");
+        return;
+    }
+    while(true)
+    {   
+        float x_pos = joy_read_x();
+        float y_pos = joy_read_y();
+        ESP_LOGI(TAG, "Joy reading... X: %f, Y: %f\n\n", x_pos, y_pos);
+        vTaskDelay(333 / portTICK_PERIOD_MS);
     }
 }
 
@@ -67,7 +64,7 @@ static void _app_task(void *p_parameter)
     // printf("Wifi initalized, starting to provision\n");
     // wifi_provision(); testirano i radi provision
     acc_init();
-    wifi_connect(); // I ovo testirano i radi
+    //wifi_connect(); // I ovo testirano i radi
     char strftime_buf[64];
     uint32_t curr_time = 0;
     // create accelerometer task

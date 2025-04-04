@@ -6,24 +6,25 @@
  *
  */
 
-#ifndef SPI_H
-#define SPI_H
+
+#ifndef JOY_H
+#define JOY_H
 
 /*--------------------------- INCLUDES ---------------------------------------*/
-#include "freertos/FreeRTOS.h"
-#include "freertos/task.h"
-#include "sdkconfig.h"
-#include <stdio.h>
-
 /*--------------------------- MACROS AND DEFINES -----------------------------*/
+#include "adc.h"
+#define JOYSTICK_X (34u)
+#define JOYSTICK_Y (35u)
+
+
+
+#define EXAMPLE_ADC_ATTEN ADC_ATTEN_DB_11
+
 /*--------------------------- TYPEDEFS AND STRUCTS ---------------------------*/
+int joy_init(void);
+int joy_read_x();
+int joy_read_y();
 /*--------------------------- EXTERN -----------------------------------------*/
 /*--------------------------- GLOBAL FUNCTION PROTOTYPES ---------------------*/
-void SPI_init();
-uint8_t SPI_transaction(uint8_t address, uint8_t rwb, uint8_t data);
-void SPI_write(uint8_t address, uint8_t data);
-uint8_t SPI_read(uint8_t address);
-void SPI_set_cs(bool set);
-void SPI_set_display_cs(bool set);
-void SPI_set_touch_cs(bool set);
-#endif /*SPI_H*/
+
+#endif /*JOY_H*/
