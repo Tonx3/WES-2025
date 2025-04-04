@@ -20,7 +20,6 @@
 #include "freertos/FreeRTOS.h"
 #include "freertos/semphr.h"
 #include "freertos/task.h"
-
 /* Littlevgl specific */
 #include "lvgl.h"
 #include "lvgl_helpers.h"

@@ -24,13 +24,29 @@
 #include "led_pwm.h"
 #include "mqtt_driver.h"
 #include "wifi.h"
+#include "accelerometer.h"
 /*--------------------------- MACROS AND DEFINES -----------------------------*/
 /*--------------------------- TYPEDEFS AND STRUCTS ---------------------------*/
 /*--------------------------- STATIC FUNCTION PROTOTYPES ---------------------*/
 static void _app_task(void *p_parameter);
 static void leds_init();
+static void _accel_read_task(void *p_parameter);
+
 /*--------------------------- VARIABLES --------------------------------------*/
 /*--------------------------- STATIC FUNCTIONS -------------------------------*/
+
+static void _accel_read_task(void *p_parameter)
+{
+
+    while(true)
+    {
+        float x = acc_get_X();  
+        float y = acc_get_Y();
+        float z = acc_get_Z();
+        printf("Accelerometer reading... X: %f, Y: %f, Z: %f\n\n", x,y,z);
+        vTaskDelay(100 / portTICK_PERIOD_MS);
+    }
+}
 
 static void _app_task(void *p_parameter)
 {
@@ -42,6 +58,10 @@ static void _app_task(void *p_parameter)
     wifi_connect(); // I ovo testirano i radi
     char strftime_buf[64];
     uint32_t curr_time = 0;
+    acc_init();
+    // create accelerometer task
+    xTaskCreate(_accel_read_task, "Accelerometer reading", 4096, NULL, 0, NULL);
+
     for (;;) {
         // i ova funkcija testirana i radi
         get_current_time(strftime_buf, &curr_time);

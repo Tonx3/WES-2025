@@ -21,4 +21,6 @@ idf_component_register(
         led_pwm
         wifi
         mqtt_driver
+        button
+        accelerometer
 )
