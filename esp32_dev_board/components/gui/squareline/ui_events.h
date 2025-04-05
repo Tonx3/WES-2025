@@ -10,8 +10,11 @@
 extern "C" {
 #endif
 
-void MusicEventCallback(lv_event_t * e);
-void WiFiProvEvent(lv_event_t * e);
+void ParkButtonCb(lv_event_t * e);
+void WifiConnectCb(lv_event_t * e);
+void WifiProvisionCb(lv_event_t * e);
+void MusicButtonCb(lv_event_t * e);
+void SaveButtonCb(lv_event_t * e);
 
 #ifdef __cplusplus
 } /*extern "C"*/

@@ -9,8 +9,10 @@ void ui_HomeScreeen_screen_init(void)
 {
     ui_HomeScreeen = lv_obj_create(NULL);
     lv_obj_clear_flag(ui_HomeScreeen, LV_OBJ_FLAG_SCROLLABLE);      /// Flags
-    lv_obj_set_style_bg_color(ui_HomeScreeen, lv_color_hex(0x77A7A0), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_bg_color(ui_HomeScreeen, lv_color_hex(0xA6BDD2), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_bg_opa(ui_HomeScreeen, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_bg_grad_color(ui_HomeScreeen, lv_color_hex(0x9BA0D0), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_bg_grad_dir(ui_HomeScreeen, LV_GRAD_DIR_VER, LV_PART_MAIN | LV_STATE_DEFAULT);
 
     ui_ParkButton = lv_btn_create(ui_HomeScreeen);
     lv_obj_set_width(ui_ParkButton, 60);
@@ -159,43 +161,37 @@ void ui_HomeScreeen_screen_init(void)
     ui_DateLabel = lv_label_create(ui_HomeScreeen);
     lv_obj_set_width(ui_DateLabel, LV_SIZE_CONTENT);   /// 1
     lv_obj_set_height(ui_DateLabel, LV_SIZE_CONTENT);    /// 1
-    lv_obj_set_x(ui_DateLabel, -107);
-    lv_obj_set_y(ui_DateLabel, -52);
+    lv_obj_set_x(ui_DateLabel, -99);
+    lv_obj_set_y(ui_DateLabel, -56);
     lv_obj_set_align(ui_DateLabel, LV_ALIGN_CENTER);
     lv_label_set_text(ui_DateLabel, "Date");
     lv_obj_set_style_text_color(ui_DateLabel, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_opa(ui_DateLabel, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
 
-    ui_Arc1 = lv_arc_create(ui_HomeScreeen);
-    lv_obj_set_width(ui_Arc1, 60);
-    lv_obj_set_height(ui_Arc1, 60);
-    lv_obj_set_x(ui_Arc1, 117);
-    lv_obj_set_y(ui_Arc1, -78);
-    lv_obj_set_align(ui_Arc1, LV_ALIGN_CENTER);
-    lv_arc_set_range(ui_Arc1, 20, 40);
-    lv_arc_set_value(ui_Arc1, 27);
+    ui_TempLabel = lv_label_create(ui_HomeScreeen);
+    lv_obj_set_width(ui_TempLabel, LV_SIZE_CONTENT);   /// 1
+    lv_obj_set_height(ui_TempLabel, LV_SIZE_CONTENT);    /// 1
+    lv_obj_set_x(ui_TempLabel, 106);
+    lv_obj_set_y(ui_TempLabel, -106);
+    lv_obj_set_align(ui_TempLabel, LV_ALIGN_CENTER);
+    lv_label_set_text(ui_TempLabel, "Temperature");
+    lv_obj_set_style_text_color(ui_TempLabel, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_opa(ui_TempLabel, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
 
-    lv_obj_set_style_bg_color(ui_Arc1, lv_color_hex(0x3C3C3C), LV_PART_INDICATOR | LV_STATE_DEFAULT);
-    lv_obj_set_style_bg_opa(ui_Arc1, 255, LV_PART_INDICATOR | LV_STATE_DEFAULT);
-    lv_obj_set_style_bg_grad_dir(ui_Arc1, LV_GRAD_DIR_NONE, LV_PART_INDICATOR | LV_STATE_DEFAULT);
-    lv_obj_set_style_arc_color(ui_Arc1, lv_color_hex(0x2A00FF), LV_PART_INDICATOR | LV_STATE_DEFAULT);
-    lv_obj_set_style_arc_opa(ui_Arc1, 255, LV_PART_INDICATOR | LV_STATE_DEFAULT);
+    ui_HumidityLabel = lv_label_create(ui_HomeScreeen);
+    lv_obj_set_width(ui_HumidityLabel, LV_SIZE_CONTENT);   /// 1
+    lv_obj_set_height(ui_HumidityLabel, LV_SIZE_CONTENT);    /// 1
+    lv_obj_set_x(ui_HumidityLabel, 107);
+    lv_obj_set_y(ui_HumidityLabel, -82);
+    lv_obj_set_align(ui_HumidityLabel, LV_ALIGN_CENTER);
+    lv_label_set_text(ui_HumidityLabel, "Hum");
+    lv_obj_set_style_text_color(ui_HumidityLabel, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_opa(ui_HumidityLabel, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
 
-    lv_obj_set_style_bg_color(ui_Arc1, lv_color_hex(0x000000), LV_PART_KNOB | LV_STATE_DEFAULT);
-    lv_obj_set_style_bg_opa(ui_Arc1, 255, LV_PART_KNOB | LV_STATE_DEFAULT);
-
-    ui_Temp = lv_label_create(ui_HomeScreeen);
-    lv_obj_set_width(ui_Temp, LV_SIZE_CONTENT);   /// 1
-    lv_obj_set_height(ui_Temp, LV_SIZE_CONTENT);    /// 1
-    lv_obj_set_x(ui_Temp, 101);
-    lv_obj_set_y(ui_Temp, -37);
-    lv_obj_set_align(ui_Temp, LV_ALIGN_CENTER);
-    lv_label_set_text(ui_Temp, "Temperature");
-    lv_obj_set_style_text_color(ui_Temp, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_text_opa(ui_Temp, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
-
+    lv_obj_add_event_cb(ui_ParkButton, ui_event_ParkButton, LV_EVENT_ALL, NULL);
+    lv_obj_add_event_cb(ui_WiFiButton, ui_event_WiFiButton, LV_EVENT_ALL, NULL);
     lv_obj_add_event_cb(ui_SettingsButton, ui_event_SettingsButton, LV_EVENT_ALL, NULL);
-    lv_obj_add_event_cb(ui_Image4, ui_event_Image4, LV_EVENT_ALL, NULL);
-    lv_obj_add_event_cb(ui_Image5, ui_event_Image5, LV_EVENT_ALL, NULL);
+    lv_obj_add_event_cb(ui_MusicButton, ui_event_MusicButton, LV_EVENT_ALL, NULL);
+    lv_obj_add_event_cb(ui_DrivingInfo, ui_event_DrivingInfo, LV_EVENT_ALL, NULL);
 
 }

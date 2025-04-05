@@ -12,24 +12,26 @@
 // SCREEN: ui_HomeScreeen
 void ui_HomeScreeen_screen_init(void);
 lv_obj_t * ui_HomeScreeen;
+void ui_event_ParkButton(lv_event_t * e);
 lv_obj_t * ui_ParkButton;
 lv_obj_t * ui_Image1;
+void ui_event_WiFiButton(lv_event_t * e);
 lv_obj_t * ui_WiFiButton;
 lv_obj_t * ui_Image2;
 void ui_event_SettingsButton(lv_event_t * e);
 lv_obj_t * ui_SettingsButton;
 lv_obj_t * ui_Image3;
+void ui_event_MusicButton(lv_event_t * e);
 lv_obj_t * ui_MusicButton;
-void ui_event_Image4(lv_event_t * e);
 lv_obj_t * ui_Image4;
+void ui_event_DrivingInfo(lv_event_t * e);
 lv_obj_t * ui_DrivingInfo;
-void ui_event_Image5(lv_event_t * e);
 lv_obj_t * ui_Image5;
 lv_obj_t * ui_TurnOff;
 lv_obj_t * ui_TimeLabel;
 lv_obj_t * ui_DateLabel;
-lv_obj_t * ui_Arc1;
-lv_obj_t * ui_Temp;
+lv_obj_t * ui_TempLabel;
+lv_obj_t * ui_HumidityLabel;
 
 
 // SCREEN: ui_ParkMode
@@ -41,16 +43,14 @@ lv_obj_t * ui_CamImage;
 // SCREEN: ui_Settings
 void ui_Settings_screen_init(void);
 lv_obj_t * ui_Settings;
-lv_obj_t * ui_Save;
-lv_obj_t * ui_Label3;
+void ui_event_SaveButton(lv_event_t * e);
+lv_obj_t * ui_SaveButton;
+lv_obj_t * ui_SaveButtonLabel;
 lv_obj_t * ui_SettingsNaslov;
-lv_obj_t * ui_WiFiConnectButton;
-lv_obj_t * ui_WiFi_Connect;
-void ui_event_WiFiProvisioningButton(lv_event_t * e);
-lv_obj_t * ui_WiFiProvisioningButton;
-lv_obj_t * ui_WiFi_Provisioning;
-lv_obj_t * ui_Slider3;
-lv_obj_t * ui_Slider4;
+lv_obj_t * ui_SliderSound;
+lv_obj_t * ui_SliderLight;
+lv_obj_t * ui_SoundLabel;
+lv_obj_t * ui_LightLabel;
 
 
 // SCREEN: ui_CarInfo
@@ -64,7 +64,7 @@ lv_obj_t * ui_Incline;
 lv_obj_t * ui_TiltNum;
 lv_obj_t * ui_InclineNum;
 lv_obj_t * ui_CarInfoBackButton;
-lv_obj_t * ui_Label12;
+lv_obj_t * ui_InfoBackLabel;
 lv_obj_t * ui____initial_actions0;
 
 ///////////////////// TEST LVGL SETTINGS ////////////////////
@@ -78,6 +78,25 @@ lv_obj_t * ui____initial_actions0;
 ///////////////////// ANIMATIONS ////////////////////
 
 ///////////////////// FUNCTIONS ////////////////////
+void ui_event_ParkButton(lv_event_t * e)
+{
+    lv_event_code_t event_code = lv_event_get_code(e);
+    lv_obj_t * target = lv_event_get_target(e);
+    if(event_code == LV_EVENT_CLICKED) {
+        ParkButtonCb(e);
+    }
+}
+void ui_event_WiFiButton(lv_event_t * e)
+{
+    lv_event_code_t event_code = lv_event_get_code(e);
+    lv_obj_t * target = lv_event_get_target(e);
+    if(event_code == LV_EVENT_SHORT_CLICKED) {
+        WifiConnectCb(e);
+    }
+    if(event_code == LV_EVENT_LONG_PRESSED) {
+        WifiProvisionCb(e);
+    }
+}
 void ui_event_SettingsButton(lv_event_t * e)
 {
     lv_event_code_t event_code = lv_event_get_code(e);
@@ -86,15 +105,15 @@ void ui_event_SettingsButton(lv_event_t * e)
         _ui_screen_change(&ui_Settings, LV_SCR_LOAD_ANIM_FADE_ON, 500, 0, &ui_Settings_screen_init);
     }
 }
-void ui_event_Image4(lv_event_t * e)
+void ui_event_MusicButton(lv_event_t * e)
 {
     lv_event_code_t event_code = lv_event_get_code(e);
     lv_obj_t * target = lv_event_get_target(e);
     if(event_code == LV_EVENT_CLICKED) {
-        MusicEventCallback(e);
+        MusicButtonCb(e);
     }
 }
-void ui_event_Image5(lv_event_t * e)
+void ui_event_DrivingInfo(lv_event_t * e)
 {
     lv_event_code_t event_code = lv_event_get_code(e);
     lv_obj_t * target = lv_event_get_target(e);
@@ -102,12 +121,12 @@ void ui_event_Image5(lv_event_t * e)
         _ui_screen_change(&ui_CarInfo, LV_SCR_LOAD_ANIM_FADE_ON, 500, 0, &ui_CarInfo_screen_init);
     }
 }
-void ui_event_WiFiProvisioningButton(lv_event_t * e)
+void ui_event_SaveButton(lv_event_t * e)
 {
     lv_event_code_t event_code = lv_event_get_code(e);
     lv_obj_t * target = lv_event_get_target(e);
     if(event_code == LV_EVENT_CLICKED) {
-        WiFiProvEvent(e);
+        SaveButtonCb(e);
     }
 }
 

@@ -14,3 +14,28 @@ void WiFiProvEvent(lv_event_t * e)
 {
 	// Your code here
 }
+
+void ParkButtonCb(lv_event_t * e)
+{
+	// Your code here
+}
+
+void WifiConnectCb(lv_event_t * e)
+{
+	// Your code here
+}
+
+void WifiProvisionCb(lv_event_t * e)
+{
+	// Your code here
+}
+
+void MusicButtonCb(lv_event_t * e)
+{
+	// Your code here
+}
+
+void SaveButtonCb(lv_event_t * e)
+{
+	// Your code here
+}

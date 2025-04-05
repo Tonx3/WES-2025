@@ -17,24 +17,26 @@ extern "C" {
 // SCREEN: ui_HomeScreeen
 void ui_HomeScreeen_screen_init(void);
 extern lv_obj_t * ui_HomeScreeen;
+void ui_event_ParkButton(lv_event_t * e);
 extern lv_obj_t * ui_ParkButton;
 extern lv_obj_t * ui_Image1;
+void ui_event_WiFiButton(lv_event_t * e);
 extern lv_obj_t * ui_WiFiButton;
 extern lv_obj_t * ui_Image2;
 void ui_event_SettingsButton(lv_event_t * e);
 extern lv_obj_t * ui_SettingsButton;
 extern lv_obj_t * ui_Image3;
+void ui_event_MusicButton(lv_event_t * e);
 extern lv_obj_t * ui_MusicButton;
-void ui_event_Image4(lv_event_t * e);
 extern lv_obj_t * ui_Image4;
+void ui_event_DrivingInfo(lv_event_t * e);
 extern lv_obj_t * ui_DrivingInfo;
-void ui_event_Image5(lv_event_t * e);
 extern lv_obj_t * ui_Image5;
 extern lv_obj_t * ui_TurnOff;
 extern lv_obj_t * ui_TimeLabel;
 extern lv_obj_t * ui_DateLabel;
-extern lv_obj_t * ui_Arc1;
-extern lv_obj_t * ui_Temp;
+extern lv_obj_t * ui_TempLabel;
+extern lv_obj_t * ui_HumidityLabel;
 // SCREEN: ui_ParkMode
 void ui_ParkMode_screen_init(void);
 extern lv_obj_t * ui_ParkMode;
@@ -42,16 +44,14 @@ extern lv_obj_t * ui_CamImage;
 // SCREEN: ui_Settings
 void ui_Settings_screen_init(void);
 extern lv_obj_t * ui_Settings;
-extern lv_obj_t * ui_Save;
-extern lv_obj_t * ui_Label3;
+void ui_event_SaveButton(lv_event_t * e);
+extern lv_obj_t * ui_SaveButton;
+extern lv_obj_t * ui_SaveButtonLabel;
 extern lv_obj_t * ui_SettingsNaslov;
-extern lv_obj_t * ui_WiFiConnectButton;
-extern lv_obj_t * ui_WiFi_Connect;
-void ui_event_WiFiProvisioningButton(lv_event_t * e);
-extern lv_obj_t * ui_WiFiProvisioningButton;
-extern lv_obj_t * ui_WiFi_Provisioning;
-extern lv_obj_t * ui_Slider3;
-extern lv_obj_t * ui_Slider4;
+extern lv_obj_t * ui_SliderSound;
+extern lv_obj_t * ui_SliderLight;
+extern lv_obj_t * ui_SoundLabel;
+extern lv_obj_t * ui_LightLabel;
 // SCREEN: ui_CarInfo
 void ui_CarInfo_screen_init(void);
 extern lv_obj_t * ui_CarInfo;
@@ -63,7 +63,7 @@ extern lv_obj_t * ui_Incline;
 extern lv_obj_t * ui_TiltNum;
 extern lv_obj_t * ui_InclineNum;
 extern lv_obj_t * ui_CarInfoBackButton;
-extern lv_obj_t * ui_Label12;
+extern lv_obj_t * ui_InfoBackLabel;
 extern lv_obj_t * ui____initial_actions0;
 
 LV_IMG_DECLARE(ui_img_730112842);    // assets\letter-p_5584659 (1).png

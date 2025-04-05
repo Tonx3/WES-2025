@@ -9,8 +9,10 @@ void ui_CarInfo_screen_init(void)
 {
     ui_CarInfo = lv_obj_create(NULL);
     lv_obj_clear_flag(ui_CarInfo, LV_OBJ_FLAG_SCROLLABLE);      /// Flags
-    lv_obj_set_style_bg_color(ui_CarInfo, lv_color_hex(0x77A7A0), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_bg_color(ui_CarInfo, lv_color_hex(0xA6BDD2), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_bg_opa(ui_CarInfo, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_bg_grad_color(ui_CarInfo, lv_color_hex(0x9BA0D0), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_bg_grad_dir(ui_CarInfo, LV_GRAD_DIR_VER, LV_PART_MAIN | LV_STATE_DEFAULT);
 
     ui_Speed = lv_label_create(ui_CarInfo);
     lv_obj_set_width(ui_Speed, LV_SIZE_CONTENT);   /// 1
@@ -37,13 +39,13 @@ void ui_CarInfo_screen_init(void)
     ui_SpeedPlaceholder = lv_label_create(ui_CarInfo);
     lv_obj_set_width(ui_SpeedPlaceholder, LV_SIZE_CONTENT);   /// 1
     lv_obj_set_height(ui_SpeedPlaceholder, LV_SIZE_CONTENT);    /// 1
-    lv_obj_set_x(ui_SpeedPlaceholder, 32);
-    lv_obj_set_y(ui_SpeedPlaceholder, -75);
+    lv_obj_set_x(ui_SpeedPlaceholder, 0);
+    lv_obj_set_y(ui_SpeedPlaceholder, -79);
     lv_obj_set_align(ui_SpeedPlaceholder, LV_ALIGN_CENTER);
     lv_label_set_text(ui_SpeedPlaceholder, "Car Info");
     lv_obj_set_style_text_color(ui_SpeedPlaceholder, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_opa(ui_SpeedPlaceholder, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_text_font(ui_SpeedPlaceholder, &lv_font_montserrat_36, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_font(ui_SpeedPlaceholder, &lv_font_montserrat_28, LV_PART_MAIN | LV_STATE_DEFAULT);
 
     ui_Tilt = lv_label_create(ui_CarInfo);
     lv_obj_set_width(ui_Tilt, LV_SIZE_CONTENT);   /// 1
@@ -95,11 +97,13 @@ void ui_CarInfo_screen_init(void)
     lv_obj_set_align(ui_CarInfoBackButton, LV_ALIGN_CENTER);
     lv_obj_add_flag(ui_CarInfoBackButton, LV_OBJ_FLAG_SCROLL_ON_FOCUS);     /// Flags
     lv_obj_clear_flag(ui_CarInfoBackButton, LV_OBJ_FLAG_SCROLLABLE);      /// Flags
+    lv_obj_set_style_bg_color(ui_CarInfoBackButton, lv_color_hex(0x5275A1), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_bg_opa(ui_CarInfoBackButton, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
 
-    ui_Label12 = lv_label_create(ui_CarInfoBackButton);
-    lv_obj_set_width(ui_Label12, LV_SIZE_CONTENT);   /// 1
-    lv_obj_set_height(ui_Label12, LV_SIZE_CONTENT);    /// 1
-    lv_obj_set_align(ui_Label12, LV_ALIGN_CENTER);
-    lv_label_set_text(ui_Label12, "Home");
+    ui_InfoBackLabel = lv_label_create(ui_CarInfoBackButton);
+    lv_obj_set_width(ui_InfoBackLabel, LV_SIZE_CONTENT);   /// 1
+    lv_obj_set_height(ui_InfoBackLabel, LV_SIZE_CONTENT);    /// 1
+    lv_obj_set_align(ui_InfoBackLabel, LV_ALIGN_CENTER);
+    lv_label_set_text(ui_InfoBackLabel, "Home");
 
 }
