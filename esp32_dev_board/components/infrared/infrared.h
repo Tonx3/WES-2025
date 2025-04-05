@@ -5,20 +5,17 @@
  * ░█▄▀▄█ ░█▄▄▄ ░█▄▄▄█ ── █▄▄ █▄▄█ █▄▄ ▄▄▀
  *
  */
-#ifndef ADC_H
-#define ADC_H
+
+#ifndef INFRARED_H
+#define INFRARED_H
 
 /*--------------------------- INCLUDES ---------------------------------------*/
-#include <stdlib.h>
+#include "myadc.h"
 /*--------------------------- MACROS AND DEFINES -----------------------------*/
-
-#define EXAMPLE_ADC_ATTEN ADC_ATTEN_DB_12
-
 /*--------------------------- TYPEDEFS AND STRUCTS ---------------------------*/
-int adc_init_unit(uint8_t unit);
-int adc_init_channel(uint8_t unit, int channel);
-int adc_read(uint8_t unit, int channel);
 /*--------------------------- EXTERN -----------------------------------------*/
 /*--------------------------- GLOBAL FUNCTION PROTOTYPES ---------------------*/
+int ir_init(void);
+int ir_read(void);
 
-#endif /*ADC_H*/
+#endif /*INFRARED_H*/

@@ -1,4 +1,4 @@
-set(COMPONENT_SRCS "joy.c")
+set(COMPONENT_SRCS "infrared.c")
 set(COMPONENT_ADD_INCLUDEDIRS ".")
 set(COMPONENT_REQUIRES driver esp_adc myadc)
 

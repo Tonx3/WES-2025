@@ -30,8 +30,11 @@
 #include "esp_log.h"
 #include "i2c.h"
 #include "i2s.h"
+#include "infrared.h"
 #include "joy.h"
 #include "light.h"
+#include "myadc.h"
+#include "potentiometer.h"
 #include "temphum.h"
 #include "ultrasonic.h"
 /*--------------------------- MACROS AND DEFINES -----------------------------*/
@@ -45,36 +48,47 @@ static void _i2c_read_task(void *p_parameter);
 static void _accelerometer_task(void *p_parameter);
 static void _time_task(void *p_parameter);
 static void _ultrasonic_task(void *p_parameter);
+static void _pot_read_task(void *p_parameter);
+static void _ir_read_task(void *p_parameter);
 /*--------------------------- VARIABLES --------------------------------------*/
 static const char *TAG = "app";
 /*--------------------------- STATIC FUNCTIONS -------------------------------*/
-static void _app_task(void *p_parameter)
+static void _ir_read_task(void *p_parameter)
 {
-    (void)p_parameter;
-    // led_on_pwm(LED_ID_BLUE, 20);
-    // led_on_pwm(LED_ID_BUZZER, 50);
-    // printf("Wifi initalized, starting to provision\n");
-    // wifi_provision(); testirano i radi provision
-    //  wifi_connect(); // I ovo testirano i radi
-    // create accelerometer task
-
-    // APP TASK CE BITI JEDINI TASK KOJI OVDJE RADI SVE NA LOOPU (ZA SADA)
-    for (;;) {
-        // i ova funkcija testirana i radi
-        // get_current_time(strftime_buf, &curr_time);
-        // printf("Hello world, current time is: %ld = %s\n", curr_time,
-        //      strftime_buf);
-        // printf("Hello world, current time is: %ld = %s\n", curr_time,
-        //      strftime_buf);
-        // vTaskDelay(1000 / portTICK_PERIOD_MS);
-        // play_audio();
-        // led_off(LED_ID_BUZZER);
-        // led_toggle(LED_ID_GREEN);
-        // led_toggle(LED_ID_RED);
+    while (true) {
+        int val = ir_read();
+        ESP_LOGI(TAG, "IR sensor reading:  %d", val);
+        vTaskDelay(333 / portTICK_PERIOD_MS);
     }
 }
 
-static void _ultrasonic_task(void *p_parameter) {}
+static void _pot_read_task(void *p_parameter)
+{
+    while (true) {
+        int val = pot_read();
+        ESP_LOGI(TAG, "Potentiometer reading:  %d", val);
+        vTaskDelay(333 / portTICK_PERIOD_MS);
+    }
+}
+
+static void _ultrasonic_task(void *p_parameter)
+{
+    while (true) {
+        double distance;
+        ultrasonic_measure_cm(&distance);
+        ESP_LOGI(TAG, "Ultrasonic reading... distance: %lf cm\n\n", distance);
+        vTaskDelay(333 / portTICK_PERIOD_MS);
+    }
+}
+
+static void _app_task(void *p_parameter)
+{
+    (void)p_parameter;
+    // APP TASK CE BITI JEDINI TASK KOJI OVDJE RADI SVE NA LOOPU (ZA SADA)
+    for (;;) {
+        vTaskDelay(1000 / portTICK_PERIOD_MS);
+    }
+}
 
 static void _time_task(void *p_parameter)
 {
@@ -156,8 +170,8 @@ static void _i2c_read_task(void *p_parameter)
 static void leds_init()
 {
     led_init(LED_ID_BLUE);
-    led_init(LED_ID_GREEN);
-    led_init(LED_ID_RED);
+    // led_init(LED_ID_GREEN);
+    // led_init(LED_ID_RED);
     led_init(LED_ID_BUZZER);
 }
 /*--------------------------- GLOBAL FUNCTIONS -------------------------------*/
@@ -167,6 +181,16 @@ void app_init(void)
     ui_init();
     leds_init();
     acc_init();
+
+    if (pot_init() != 0) {
+        ESP_LOGE(TAG, "Unable to init adc pot");
+        return;
+    }
+    if (ir_init() != 0) {
+        ESP_LOGE(TAG, "Unable to init adc ir");
+        return;
+    }
+
     int acc_whoami = dummy_read();
     ESP_LOGI("TAG", "Acc who am I: 0x%x", acc_whoami);
     if (joy_init() != 0) {
@@ -191,4 +215,6 @@ void app_init(void)
     xTaskCreatePinnedToCore(_time_task, "time", 4096, NULL, 0, NULL, 0);
     xTaskCreatePinnedToCore(_ultrasonic_task, "ultrasonic", 4096, NULL, 0, NULL,
                             0);
+    xTaskCreatePinnedToCore(_pot_read_task, "pot", 4096, NULL, 0, NULL, 0);
+    xTaskCreatePinnedToCore(_ir_read_task, "ir", 4096, NULL, 0, NULL, 0);
 }

@@ -40,4 +40,7 @@ idf_component_register(
         light
         ultrasonic
         i2s
+        potentiometer
+        infrared
+        myadc
 )

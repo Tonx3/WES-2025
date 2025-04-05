@@ -6,19 +6,16 @@
  *
  */
 
-#ifndef JOY_H
-#define JOY_H
+#ifndef POTENTIOMETER_H
+#define POTENTIOMETER_H
 
 /*--------------------------- INCLUDES ---------------------------------------*/
-/*--------------------------- MACROS AND DEFINES -----------------------------*/
 #include "myadc.h"
-#define JOYSTICK_X (34u)
-#define JOYSTICK_Y (35u)
+/*--------------------------- MACROS AND DEFINES -----------------------------*/
 /*--------------------------- TYPEDEFS AND STRUCTS ---------------------------*/
-int joy_init(void);
-int joy_read_x();
-int joy_read_y();
 /*--------------------------- EXTERN -----------------------------------------*/
 /*--------------------------- GLOBAL FUNCTION PROTOTYPES ---------------------*/
+int pot_init(void);
+int pot_read(void);
 
-#endif /*JOY_H*/
+#endif /*POTENTIOMETER_H*/

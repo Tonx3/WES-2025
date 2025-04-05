@@ -5,20 +5,20 @@
  * ░█▄▀▄█ ░█▄▄▄ ░█▄▄▄█ ── █▄▄ █▄▄█ █▄▄ ▄▄▀
  *
  */
-
-#ifndef JOY_H
-#define JOY_H
+#ifndef MYADC_H
+#define MYADC_H
 
 /*--------------------------- INCLUDES ---------------------------------------*/
+#include <stdlib.h>
 /*--------------------------- MACROS AND DEFINES -----------------------------*/
-#include "myadc.h"
-#define JOYSTICK_X (34u)
-#define JOYSTICK_Y (35u)
+
+#define EXAMPLE_ADC_ATTEN ADC_ATTEN_DB_12
+
 /*--------------------------- TYPEDEFS AND STRUCTS ---------------------------*/
-int joy_init(void);
-int joy_read_x();
-int joy_read_y();
+int adc_init_unit(uint8_t unit);
+int adc_init_channel(uint8_t unit, int channel);
+int adc_read(uint8_t unit, int channel);
 /*--------------------------- EXTERN -----------------------------------------*/
 /*--------------------------- GLOBAL FUNCTION PROTOTYPES ---------------------*/
 
-#endif /*JOY_H*/
+#endif /*MYADC_H*/
