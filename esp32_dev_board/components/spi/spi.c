@@ -33,10 +33,13 @@
 #define PIN_NUM_TOUCH_CS  0
 
 #define CLK_SPEED_SPI 1000 * 10
+#define PARALLEL_LINES 4
+#define SPI_BUFF_SIZE 1024
 /*--------------------------- TYPEDEFS AND STRUCTS ---------------------------*/
 /*--------------------------- STATIC FUNCTION PROTOTYPES ---------------------*/
+static void SPI_sendData(uint8_t bufferSize);
+static void SPI_sendReceiveData(uint8_t txBufferSize, uint8_t rxBufferSize);
 /*--------------------------- VARIABLES --------------------------------------*/
-/*--------------------------- STATIC FUNCTIONS -------------------------------*/
 
 static spi_device_interface_config_t spi_device_interface_config = {
     .command_bits = 0,
@@ -45,22 +48,56 @@ static spi_device_interface_config_t spi_device_interface_config = {
     .mode = 0,
     .clock_speed_hz = CLK_SPEED_SPI, // 10kHz
     .spics_io_num = PIN_NUM_CS,
-    .queue_size = 1, // nebitno :)
+    .queue_size = 2, // nebitno :)
 
 };
 
 static spi_device_handle_t spi_device_handle;
-// Local function declarations
+
+char spi_tx_buffer[SPI_BUFF_SIZE];
+char spi_rx_buffer[SPI_BUFF_SIZE];
+/*--------------------------- STATIC FUNCTIONS -------------------------------*/
+static void SPI_sendData(uint8_t bufferSize)
+{
+    esp_err_t ret;
+    spi_transaction_t spi_transaction;
+    memset(&spi_transaction, 0, sizeof(spi_transaction));       //Zero out the transaction
+    spi_transaction.length = bufferSize*8;                   //Command is 8 bits
+    spi_transaction.tx_buffer = spi_tx_buffer;             //The data is the cmd itself
+    spi_transaction.rx_buffer=NULL;
+    //spi_transaction.user = (void*)0;              //D/C needs to be set to 0
+
+    ret = spi_device_polling_transmit(spi_device_handle, &spi_transaction); //Transmit!
+    assert(ret == ESP_OK);          //Should have had no issues.
+}
+
+static void SPI_sendReceiveData(uint8_t txBufferSize, uint8_t rxBufferSize)
+{
+    esp_err_t ret;
+    spi_transaction_t spi_transaction;
+    memset(&spi_transaction, 0, sizeof(spi_transaction));       //Zero out the transaction
+    spi_transaction.length = txBufferSize*8;                   //Command is 8 bits
+    spi_transaction.tx_buffer = spi_tx_buffer;             //The data is the cmd itself
+    spi_transaction.rx_buffer = spi_rx_buffer;
+    spi_transaction.rxlength = rxBufferSize*8;
+
+    ret = spi_device_polling_transmit(spi_device_handle, &spi_transaction); //Transmit!
+    assert(ret == ESP_OK);          //Should have had no issues.
+}
 /*--------------------------- GLOBAL FUNCTIONS -------------------------------*/
 void SPI_init()
 {
+    static bool init = false;
     esp_err_t ret;
+    if(!init)
+    {
+        init = true;
+        ret = spi_bus_add_device(SPI3_HOST, &spi_device_interface_config,
+                                    &spi_device_handle);
+        ESP_ERROR_CHECK(ret);
 
-    ret = spi_bus_add_device(SPI3_HOST, &spi_device_interface_config,
-                             &spi_device_handle);
-    ESP_ERROR_CHECK(ret);
-
-    SPI_set_cs(true);
+        SPI_set_cs(true);
+    }
 }
 
 uint8_t SPI_transaction(uint8_t address, uint8_t rwb, uint8_t data)
@@ -87,14 +124,37 @@ uint8_t SPI_transaction(uint8_t address, uint8_t rwb, uint8_t data)
     return recieved_data;
 }
 
-void SPI_write(uint8_t address, uint8_t data)
+void SPI_write(char *txBuffer, uint8_t txSize)
 {
-    SPI_transaction(address, 0, data);
+    //ESP_LOGI("SPI", "ATTEMPTING write");
+    assert(txSize<=SPI_BUFF_SIZE);
+    memset(spi_tx_buffer, 0, SPI_BUFF_SIZE);
+    memcpy(spi_tx_buffer, txBuffer, txSize);
+    SPI_sendData(txSize);
+    
 }
 
-uint8_t SPI_read(uint8_t address)
+void SPI_write_read(char *txBuffer, uint8_t txSize, char *rxBuffer, uint8_t rxSize)
 {
-    return SPI_transaction(address, 1, 0x00);
+    assert(txSize<=SPI_BUFF_SIZE);
+    memset(spi_tx_buffer, 0, SPI_BUFF_SIZE);
+    memcpy(spi_tx_buffer, txBuffer, txSize);
+    
+    SPI_sendReceiveData(txSize, rxSize);
+    memcpy(rxBuffer, spi_rx_buffer, rxSize);
+}
+
+uint8_t SPI_read(char *rxBuffer, uint8_t rxSize)
+{
+
+    spi_transaction_t spi_transaction = {.tx_buffer = NULL,
+                                         .rxlength = rxSize*8,
+                                        .rx_buffer = rxBuffer};
+    esp_err_t ret;
+    //ESP_LOGI("SPI", "ATTEMPTING read");
+    ret = spi_device_polling_transmit(spi_device_handle, &spi_transaction);
+    ESP_ERROR_CHECK(ret);
+    return ret;
 }
 
 void SPI_set_cs(bool set)

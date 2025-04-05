@@ -47,9 +47,11 @@ static void _accel_read_task(void *p_parameter)
         ESP_LOGE(TAG, "Unable to init adc");
         return;
     }
+    
+        ESP_LOGI(TAG, "Task entered");
     while (true) {
-        float x_pos = joy_read_x();
-        float y_pos = joy_read_y();
+        float x_pos = acc_get_X();
+        float y_pos = acc_get_Y();
         ESP_LOGI(TAG, "Joy reading... X: %f, Y: %f\n\n", x_pos, y_pos);
         vTaskDelay(333 / portTICK_PERIOD_MS);
     }
@@ -100,6 +102,8 @@ void app_init(void)
     ui_init();
     leds_init();
     acc_init();
+    int acc_whoami = dummy_read();
+    ESP_LOGI("TAG", "Acc who am I: 0x%x", acc_whoami);
     if (joy_init() != 0) {
         ESP_LOGE(TAG, "Unable to init adc");
         return;
