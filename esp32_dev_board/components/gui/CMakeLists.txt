@@ -26,4 +26,5 @@ idf_component_register(
         joy
         i2c
         temphum
+        light
 )

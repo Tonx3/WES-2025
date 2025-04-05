@@ -18,5 +18,7 @@
 esp_err_t I2C_init(void);
 void I2C_write(uint8_t device_addr, uint8_t *data, uint32_t size);
 void I2C_read(uint8_t device_addr, uint8_t *data, uint32_t size);
+esp_err_t I2C_read_register(uint8_t device_addr, uint8_t reg_addr,
+                            uint8_t *data, uint32_t size);
 
 #endif /*I2C_H*/

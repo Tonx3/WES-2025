@@ -29,6 +29,7 @@
 #include "esp_log.h"
 #include "i2c.h"
 #include "joy.h"
+#include "light.h"
 #include "temphum.h"
 /*--------------------------- MACROS AND DEFINES -----------------------------*/
 /*--------------------------- TYPEDEFS AND STRUCTS ---------------------------*/
@@ -47,12 +48,12 @@ static void _accel_read_task(void *p_parameter)
         ESP_LOGE(TAG, "Unable to init adc");
         return;
     }
-    
-        ESP_LOGI(TAG, "Task entered");
+
+    ESP_LOGI(TAG, "Task entered");
     while (true) {
-        float x_pos = acc_get_X();
-        float y_pos = acc_get_Y();
-        ESP_LOGI(TAG, "Joy reading... X: %f, Y: %f\n\n", x_pos, y_pos);
+        float x_pos = joy_read_x();
+        float y_pos = joy_read_y();
+        //   ESP_LOGI(TAG, "Joy reading... X: %f, Y: %f\n\n", x_pos, y_pos);
         vTaskDelay(333 / portTICK_PERIOD_MS);
     }
 }
@@ -71,6 +72,8 @@ static void _app_task(void *p_parameter)
     xTaskCreate(_accel_read_task, "Accelerometer reading", 4096, NULL, 0, NULL);
     double temp = 0;
     double humidity = 0;
+    uint16_t light = 0;
+    uint16_t white = 0;
     for (;;) {
         // i ova funkcija testirana i radi
         get_current_time(strftime_buf, &curr_time);
@@ -81,6 +84,8 @@ static void _app_task(void *p_parameter)
         led_toggle(LED_ID_GREEN);
         led_toggle(LED_ID_RED);
         temphum_start_measurement();
+        light_read(&light, &white);
+        ESP_LOGI(TAG, "Light: %d, White: %d\n", light, white);
         vTaskDelay(1000 / portTICK_PERIOD_MS);
         temphum_read(&temp, &humidity);
         ESP_LOGI(TAG, "Temperature: %f, Humidity: %f\n", temp, humidity);
@@ -109,6 +114,7 @@ void app_init(void)
         return;
     }
     I2C_init();
+    light_init();
 
     wifi_init();
     // potencijalno ovo maknuti sve u _app_task() jer app_init()
