@@ -14,13 +14,63 @@ extern "C" {
 
 #include "ui_helpers.h"
 #include "ui_events.h"
-// SCREEN: ui_Screen1
-void ui_Screen1_screen_init(void);
-extern lv_obj_t * ui_Screen1;
-extern lv_obj_t * ui_Button1;
-extern lv_obj_t * ui_Label1;
+// SCREEN: ui_HomeScreeen
+void ui_HomeScreeen_screen_init(void);
+extern lv_obj_t * ui_HomeScreeen;
+extern lv_obj_t * ui_ParkButton;
+extern lv_obj_t * ui_Image1;
+extern lv_obj_t * ui_WiFiButton;
+extern lv_obj_t * ui_Image2;
+void ui_event_SettingsButton(lv_event_t * e);
+extern lv_obj_t * ui_SettingsButton;
+extern lv_obj_t * ui_Image3;
+extern lv_obj_t * ui_MusicButton;
+void ui_event_Image4(lv_event_t * e);
+extern lv_obj_t * ui_Image4;
+extern lv_obj_t * ui_DrivingInfo;
+void ui_event_Image5(lv_event_t * e);
+extern lv_obj_t * ui_Image5;
+extern lv_obj_t * ui_TurnOff;
+extern lv_obj_t * ui_TimeLabel;
+extern lv_obj_t * ui_DateLabel;
+extern lv_obj_t * ui_Arc1;
+extern lv_obj_t * ui_Temp;
+// SCREEN: ui_ParkMode
+void ui_ParkMode_screen_init(void);
+extern lv_obj_t * ui_ParkMode;
+extern lv_obj_t * ui_CamImage;
+// SCREEN: ui_Settings
+void ui_Settings_screen_init(void);
+extern lv_obj_t * ui_Settings;
+extern lv_obj_t * ui_Save;
+extern lv_obj_t * ui_Label3;
+extern lv_obj_t * ui_SettingsNaslov;
+extern lv_obj_t * ui_WiFiConnectButton;
+extern lv_obj_t * ui_WiFi_Connect;
+void ui_event_WiFiProvisioningButton(lv_event_t * e);
+extern lv_obj_t * ui_WiFiProvisioningButton;
+extern lv_obj_t * ui_WiFi_Provisioning;
+extern lv_obj_t * ui_Slider3;
+extern lv_obj_t * ui_Slider4;
+// SCREEN: ui_CarInfo
+void ui_CarInfo_screen_init(void);
+extern lv_obj_t * ui_CarInfo;
+extern lv_obj_t * ui_Speed;
+extern lv_obj_t * ui_Acceleration;
+extern lv_obj_t * ui_SpeedPlaceholder;
+extern lv_obj_t * ui_Tilt;
+extern lv_obj_t * ui_Incline;
+extern lv_obj_t * ui_TiltNum;
+extern lv_obj_t * ui_InclineNum;
+extern lv_obj_t * ui_CarInfoBackButton;
+extern lv_obj_t * ui_Label12;
 extern lv_obj_t * ui____initial_actions0;
 
+LV_IMG_DECLARE(ui_img_730112842);    // assets\letter-p_5584659 (1).png
+LV_IMG_DECLARE(ui_img_1548857385);    // assets\wifi_5915249 (1).png
+LV_IMG_DECLARE(ui_img_1896724463);    // assets\setting_7518375 (1).png
+LV_IMG_DECLARE(ui_img_1924809568);    // assets\itunes_1384045 (1).png
+LV_IMG_DECLARE(ui_img_1600593050);    // assets\car-parking_3555291 (1).png
 
 
 

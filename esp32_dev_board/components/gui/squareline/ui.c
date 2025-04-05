@@ -9,11 +9,62 @@
 ///////////////////// VARIABLES ////////////////////
 
 
-// SCREEN: ui_Screen1
-void ui_Screen1_screen_init(void);
-lv_obj_t * ui_Screen1;
-lv_obj_t * ui_Button1;
-lv_obj_t * ui_Label1;
+// SCREEN: ui_HomeScreeen
+void ui_HomeScreeen_screen_init(void);
+lv_obj_t * ui_HomeScreeen;
+lv_obj_t * ui_ParkButton;
+lv_obj_t * ui_Image1;
+lv_obj_t * ui_WiFiButton;
+lv_obj_t * ui_Image2;
+void ui_event_SettingsButton(lv_event_t * e);
+lv_obj_t * ui_SettingsButton;
+lv_obj_t * ui_Image3;
+lv_obj_t * ui_MusicButton;
+void ui_event_Image4(lv_event_t * e);
+lv_obj_t * ui_Image4;
+lv_obj_t * ui_DrivingInfo;
+void ui_event_Image5(lv_event_t * e);
+lv_obj_t * ui_Image5;
+lv_obj_t * ui_TurnOff;
+lv_obj_t * ui_TimeLabel;
+lv_obj_t * ui_DateLabel;
+lv_obj_t * ui_Arc1;
+lv_obj_t * ui_Temp;
+
+
+// SCREEN: ui_ParkMode
+void ui_ParkMode_screen_init(void);
+lv_obj_t * ui_ParkMode;
+lv_obj_t * ui_CamImage;
+
+
+// SCREEN: ui_Settings
+void ui_Settings_screen_init(void);
+lv_obj_t * ui_Settings;
+lv_obj_t * ui_Save;
+lv_obj_t * ui_Label3;
+lv_obj_t * ui_SettingsNaslov;
+lv_obj_t * ui_WiFiConnectButton;
+lv_obj_t * ui_WiFi_Connect;
+void ui_event_WiFiProvisioningButton(lv_event_t * e);
+lv_obj_t * ui_WiFiProvisioningButton;
+lv_obj_t * ui_WiFi_Provisioning;
+lv_obj_t * ui_Slider3;
+lv_obj_t * ui_Slider4;
+
+
+// SCREEN: ui_CarInfo
+void ui_CarInfo_screen_init(void);
+lv_obj_t * ui_CarInfo;
+lv_obj_t * ui_Speed;
+lv_obj_t * ui_Acceleration;
+lv_obj_t * ui_SpeedPlaceholder;
+lv_obj_t * ui_Tilt;
+lv_obj_t * ui_Incline;
+lv_obj_t * ui_TiltNum;
+lv_obj_t * ui_InclineNum;
+lv_obj_t * ui_CarInfoBackButton;
+lv_obj_t * ui_Label12;
 lv_obj_t * ui____initial_actions0;
 
 ///////////////////// TEST LVGL SETTINGS ////////////////////
@@ -27,6 +78,38 @@ lv_obj_t * ui____initial_actions0;
 ///////////////////// ANIMATIONS ////////////////////
 
 ///////////////////// FUNCTIONS ////////////////////
+void ui_event_SettingsButton(lv_event_t * e)
+{
+    lv_event_code_t event_code = lv_event_get_code(e);
+    lv_obj_t * target = lv_event_get_target(e);
+    if(event_code == LV_EVENT_CLICKED) {
+        _ui_screen_change(&ui_Settings, LV_SCR_LOAD_ANIM_FADE_ON, 500, 0, &ui_Settings_screen_init);
+    }
+}
+void ui_event_Image4(lv_event_t * e)
+{
+    lv_event_code_t event_code = lv_event_get_code(e);
+    lv_obj_t * target = lv_event_get_target(e);
+    if(event_code == LV_EVENT_CLICKED) {
+        MusicEventCallback(e);
+    }
+}
+void ui_event_Image5(lv_event_t * e)
+{
+    lv_event_code_t event_code = lv_event_get_code(e);
+    lv_obj_t * target = lv_event_get_target(e);
+    if(event_code == LV_EVENT_CLICKED) {
+        _ui_screen_change(&ui_CarInfo, LV_SCR_LOAD_ANIM_FADE_ON, 500, 0, &ui_CarInfo_screen_init);
+    }
+}
+void ui_event_WiFiProvisioningButton(lv_event_t * e)
+{
+    lv_event_code_t event_code = lv_event_get_code(e);
+    lv_obj_t * target = lv_event_get_target(e);
+    if(event_code == LV_EVENT_CLICKED) {
+        WiFiProvEvent(e);
+    }
+}
 
 ///////////////////// SCREENS ////////////////////
 
@@ -36,7 +119,10 @@ void ui_init(void)
     lv_theme_t * theme = lv_theme_default_init(dispp, lv_palette_main(LV_PALETTE_BLUE), lv_palette_main(LV_PALETTE_RED),
                                                false, LV_FONT_DEFAULT);
     lv_disp_set_theme(dispp, theme);
-    ui_Screen1_screen_init();
+    ui_HomeScreeen_screen_init();
+    ui_ParkMode_screen_init();
+    ui_Settings_screen_init();
+    ui_CarInfo_screen_init();
     ui____initial_actions0 = lv_obj_create(NULL);
-    lv_disp_load_scr(ui_Screen1);
+    lv_disp_load_scr(ui_HomeScreeen);
 }

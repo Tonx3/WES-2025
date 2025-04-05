@@ -10,6 +10,9 @@
 extern "C" {
 #endif
 
+void MusicEventCallback(lv_event_t * e);
+void WiFiProvEvent(lv_event_t * e);
+
 #ifdef __cplusplus
 } /*extern "C"*/
 #endif

@@ -1,5 +1,13 @@
-screens/ui_Screen1.c
+screens/ui_HomeScreeen.c
+screens/ui_ParkMode.c
+screens/ui_Settings.c
+screens/ui_CarInfo.c
 ui.c
 components/ui_comp_hook.c
 ui_helpers.c
 ui_events.c
+images/ui_img_730112842.c
+images/ui_img_1548857385.c
+images/ui_img_1896724463.c
+images/ui_img_1924809568.c
+images/ui_img_1600593050.c
