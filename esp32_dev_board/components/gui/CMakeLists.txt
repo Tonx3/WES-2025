@@ -27,4 +27,5 @@ idf_component_register(
         i2c
         temphum
         light
+        ultrasonic
 )
