@@ -6,19 +6,16 @@
  *
  */
 
-#ifndef JOY_H
-#define JOY_H
+#ifndef TEMPHUM_H
+#define TEMPHUM_H
 
 /*--------------------------- INCLUDES ---------------------------------------*/
+#include "esp_err.h"
 /*--------------------------- MACROS AND DEFINES -----------------------------*/
-#include "adc.h"
-#define JOYSTICK_X (34u)
-#define JOYSTICK_Y (35u)
 /*--------------------------- TYPEDEFS AND STRUCTS ---------------------------*/
-int joy_init(void);
-int joy_read_x();
-int joy_read_y();
 /*--------------------------- EXTERN -----------------------------------------*/
 /*--------------------------- GLOBAL FUNCTION PROTOTYPES ---------------------*/
-
-#endif /*JOY_H*/
+int temphum_read(double *temp, double *humidity);
+// float read_temp(uint8_t temp);
+int temphum_start_measurement();
+#endif /*TEMPHUM_H*/

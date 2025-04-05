@@ -24,4 +24,6 @@ idf_component_register(
         button
         accelerometer
         joy
+        i2c
+        temphum
 )
