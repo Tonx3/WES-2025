@@ -28,6 +28,7 @@
 #define LOG_LOCAL_LEVEL ESP_LOG_VERBOSE
 #include "esp_log.h"
 #include "i2c.h"
+#include "i2s.h"
 #include "joy.h"
 #include "light.h"
 #include "temphum.h"
@@ -99,6 +100,7 @@ static void _app_task(void *p_parameter)
         // printf("Hello world, current time is: %ld = %s\n", curr_time,
         //      strftime_buf);
         vTaskDelay(1000 / portTICK_PERIOD_MS);
+        // play_audio();
         led_off(LED_ID_BUZZER);
         led_toggle(LED_ID_GREEN);
         led_toggle(LED_ID_RED);
@@ -135,6 +137,7 @@ void app_init(void)
     }
     I2C_init();
     light_init();
+    audio_i2s_init();
 
     wifi_init();
     ultrasonic_init();

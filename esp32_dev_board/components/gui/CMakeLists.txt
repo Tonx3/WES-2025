@@ -39,4 +39,5 @@ idf_component_register(
         temphum
         light
         ultrasonic
+        i2s
 )
