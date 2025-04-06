@@ -27,17 +27,22 @@ lv_obj_t * ui_Image4;
 void ui_event_DrivingInfo(lv_event_t * e);
 lv_obj_t * ui_DrivingInfo;
 lv_obj_t * ui_Image5;
-lv_obj_t * ui_TurnOff;
 lv_obj_t * ui_TimeLabel;
 lv_obj_t * ui_DateLabel;
 lv_obj_t * ui_TempLabel;
 lv_obj_t * ui_HumidityLabel;
+void ui_event_Maps(lv_event_t * e);
+lv_obj_t * ui_Maps;
+lv_obj_t * ui_Image6;
 
 
 // SCREEN: ui_ParkMode
 void ui_ParkMode_screen_init(void);
 lv_obj_t * ui_ParkMode;
 lv_obj_t * ui_CamImage;
+void ui_event_Homepark(lv_event_t * e);
+lv_obj_t * ui_Homepark;
+lv_obj_t * ui_HomeParkLabel;
 
 
 // SCREEN: ui_Settings
@@ -57,15 +62,26 @@ lv_obj_t * ui_LightLabel;
 void ui_CarInfo_screen_init(void);
 lv_obj_t * ui_CarInfo;
 lv_obj_t * ui_Speed;
-lv_obj_t * ui_Acceleration;
+lv_obj_t * ui_Distance_;
 lv_obj_t * ui_SpeedPlaceholder;
 lv_obj_t * ui_Tilt;
 lv_obj_t * ui_Incline;
 lv_obj_t * ui_TiltNum;
 lv_obj_t * ui_InclineNum;
+void ui_event_CarInfoBackButton(lv_event_t * e);
 lv_obj_t * ui_CarInfoBackButton;
 lv_obj_t * ui_InfoBackLabel;
+
+
+// SCREEN: ui_MapScreen
+void ui_MapScreen_screen_init(void);
+lv_obj_t * ui_MapScreen;
+lv_obj_t * ui_Image7;
+void ui_event_HomeMaps(lv_event_t * e);
+lv_obj_t * ui_HomeMaps;
+lv_obj_t * ui_InfoBackLabelMaps;
 lv_obj_t * ui____initial_actions0;
+const lv_img_dsc_t * ui_imgset_maps_[1] = {&ui_img_maps_1_png};
 
 ///////////////////// TEST LVGL SETTINGS ////////////////////
 #if LV_COLOR_DEPTH != 16
@@ -121,12 +137,44 @@ void ui_event_DrivingInfo(lv_event_t * e)
         _ui_screen_change(&ui_CarInfo, LV_SCR_LOAD_ANIM_FADE_ON, 500, 0, &ui_CarInfo_screen_init);
     }
 }
+void ui_event_Maps(lv_event_t * e)
+{
+    lv_event_code_t event_code = lv_event_get_code(e);
+    lv_obj_t * target = lv_event_get_target(e);
+    if(event_code == LV_EVENT_CLICKED) {
+        _ui_screen_change(&ui_MapScreen, LV_SCR_LOAD_ANIM_FADE_ON, 500, 0, &ui_MapScreen_screen_init);
+    }
+}
+void ui_event_Homepark(lv_event_t * e)
+{
+    lv_event_code_t event_code = lv_event_get_code(e);
+    lv_obj_t * target = lv_event_get_target(e);
+    if(event_code == LV_EVENT_CLICKED) {
+        _ui_screen_change(&ui_HomeScreeen, LV_SCR_LOAD_ANIM_FADE_ON, 500, 0, &ui_HomeScreeen_screen_init);
+    }
+}
 void ui_event_SaveButton(lv_event_t * e)
 {
     lv_event_code_t event_code = lv_event_get_code(e);
     lv_obj_t * target = lv_event_get_target(e);
     if(event_code == LV_EVENT_CLICKED) {
         SaveButtonCb(e);
+    }
+}
+void ui_event_CarInfoBackButton(lv_event_t * e)
+{
+    lv_event_code_t event_code = lv_event_get_code(e);
+    lv_obj_t * target = lv_event_get_target(e);
+    if(event_code == LV_EVENT_CLICKED) {
+        _ui_screen_change(&ui_HomeScreeen, LV_SCR_LOAD_ANIM_FADE_ON, 500, 0, &ui_HomeScreeen_screen_init);
+    }
+}
+void ui_event_HomeMaps(lv_event_t * e)
+{
+    lv_event_code_t event_code = lv_event_get_code(e);
+    lv_obj_t * target = lv_event_get_target(e);
+    if(event_code == LV_EVENT_CLICKED) {
+        _ui_screen_change(&ui_HomeScreeen, LV_SCR_LOAD_ANIM_FADE_ON, 500, 0, &ui_HomeScreeen_screen_init);
     }
 }
 
@@ -142,6 +190,7 @@ void ui_init(void)
     ui_ParkMode_screen_init();
     ui_Settings_screen_init();
     ui_CarInfo_screen_init();
+    ui_MapScreen_screen_init();
     ui____initial_actions0 = lv_obj_create(NULL);
     lv_disp_load_scr(ui_HomeScreeen);
 }

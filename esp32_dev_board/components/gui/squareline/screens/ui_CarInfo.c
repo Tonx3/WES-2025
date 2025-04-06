@@ -18,23 +18,23 @@ void ui_CarInfo_screen_init(void)
     lv_obj_set_width(ui_Speed, LV_SIZE_CONTENT);   /// 1
     lv_obj_set_height(ui_Speed, LV_SIZE_CONTENT);    /// 1
     lv_obj_set_x(ui_Speed, -7);
-    lv_obj_set_y(ui_Speed, -15);
+    lv_obj_set_y(ui_Speed, -20);
     lv_obj_set_align(ui_Speed, LV_ALIGN_CENTER);
     lv_label_set_text(ui_Speed, "Speed [m/s]");
     lv_obj_set_style_text_color(ui_Speed, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_opa(ui_Speed, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_font(ui_Speed, &lv_font_montserrat_20, LV_PART_MAIN | LV_STATE_DEFAULT);
 
-    ui_Acceleration = lv_label_create(ui_CarInfo);
-    lv_obj_set_width(ui_Acceleration, LV_SIZE_CONTENT);   /// 1
-    lv_obj_set_height(ui_Acceleration, LV_SIZE_CONTENT);    /// 1
-    lv_obj_set_x(ui_Acceleration, -6);
-    lv_obj_set_y(ui_Acceleration, 17);
-    lv_obj_set_align(ui_Acceleration, LV_ALIGN_CENTER);
-    lv_label_set_text(ui_Acceleration, "Acceleration [g]");
-    lv_obj_set_style_text_color(ui_Acceleration, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_text_opa(ui_Acceleration, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_text_font(ui_Acceleration, &lv_font_montserrat_20, LV_PART_MAIN | LV_STATE_DEFAULT);
+    ui_Distance_ = lv_label_create(ui_CarInfo);
+    lv_obj_set_width(ui_Distance_, LV_SIZE_CONTENT);   /// 1
+    lv_obj_set_height(ui_Distance_, LV_SIZE_CONTENT);    /// 1
+    lv_obj_set_x(ui_Distance_, -6);
+    lv_obj_set_y(ui_Distance_, 15);
+    lv_obj_set_align(ui_Distance_, LV_ALIGN_CENTER);
+    lv_label_set_text(ui_Distance_, "Distance [m]");
+    lv_obj_set_style_text_color(ui_Distance_, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_opa(ui_Distance_, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_font(ui_Distance_, &lv_font_montserrat_20, LV_PART_MAIN | LV_STATE_DEFAULT);
 
     ui_SpeedPlaceholder = lv_label_create(ui_CarInfo);
     lv_obj_set_width(ui_SpeedPlaceholder, LV_SIZE_CONTENT);   /// 1
@@ -90,8 +90,8 @@ void ui_CarInfo_screen_init(void)
     lv_obj_set_style_text_font(ui_InclineNum, &lv_font_montserrat_20, LV_PART_MAIN | LV_STATE_DEFAULT);
 
     ui_CarInfoBackButton = lv_btn_create(ui_CarInfo);
-    lv_obj_set_width(ui_CarInfoBackButton, 51);
-    lv_obj_set_height(ui_CarInfoBackButton, 41);
+    lv_obj_set_width(ui_CarInfoBackButton, 60);
+    lv_obj_set_height(ui_CarInfoBackButton, 50);
     lv_obj_set_x(ui_CarInfoBackButton, -115);
     lv_obj_set_y(ui_CarInfoBackButton, -74);
     lv_obj_set_align(ui_CarInfoBackButton, LV_ALIGN_CENTER);
@@ -105,5 +105,7 @@ void ui_CarInfo_screen_init(void)
     lv_obj_set_height(ui_InfoBackLabel, LV_SIZE_CONTENT);    /// 1
     lv_obj_set_align(ui_InfoBackLabel, LV_ALIGN_CENTER);
     lv_label_set_text(ui_InfoBackLabel, "Home");
+
+    lv_obj_add_event_cb(ui_CarInfoBackButton, ui_event_CarInfoBackButton, LV_EVENT_ALL, NULL);
 
 }

@@ -32,15 +32,20 @@ extern lv_obj_t * ui_Image4;
 void ui_event_DrivingInfo(lv_event_t * e);
 extern lv_obj_t * ui_DrivingInfo;
 extern lv_obj_t * ui_Image5;
-extern lv_obj_t * ui_TurnOff;
 extern lv_obj_t * ui_TimeLabel;
 extern lv_obj_t * ui_DateLabel;
 extern lv_obj_t * ui_TempLabel;
 extern lv_obj_t * ui_HumidityLabel;
+void ui_event_Maps(lv_event_t * e);
+extern lv_obj_t * ui_Maps;
+extern lv_obj_t * ui_Image6;
 // SCREEN: ui_ParkMode
 void ui_ParkMode_screen_init(void);
 extern lv_obj_t * ui_ParkMode;
 extern lv_obj_t * ui_CamImage;
+void ui_event_Homepark(lv_event_t * e);
+extern lv_obj_t * ui_Homepark;
+extern lv_obj_t * ui_HomeParkLabel;
 // SCREEN: ui_Settings
 void ui_Settings_screen_init(void);
 extern lv_obj_t * ui_Settings;
@@ -56,14 +61,22 @@ extern lv_obj_t * ui_LightLabel;
 void ui_CarInfo_screen_init(void);
 extern lv_obj_t * ui_CarInfo;
 extern lv_obj_t * ui_Speed;
-extern lv_obj_t * ui_Acceleration;
+extern lv_obj_t * ui_Distance_;
 extern lv_obj_t * ui_SpeedPlaceholder;
 extern lv_obj_t * ui_Tilt;
 extern lv_obj_t * ui_Incline;
 extern lv_obj_t * ui_TiltNum;
 extern lv_obj_t * ui_InclineNum;
+void ui_event_CarInfoBackButton(lv_event_t * e);
 extern lv_obj_t * ui_CarInfoBackButton;
 extern lv_obj_t * ui_InfoBackLabel;
+// SCREEN: ui_MapScreen
+void ui_MapScreen_screen_init(void);
+extern lv_obj_t * ui_MapScreen;
+extern lv_obj_t * ui_Image7;
+void ui_event_HomeMaps(lv_event_t * e);
+extern lv_obj_t * ui_HomeMaps;
+extern lv_obj_t * ui_InfoBackLabelMaps;
 extern lv_obj_t * ui____initial_actions0;
 
 LV_IMG_DECLARE(ui_img_730112842);    // assets\letter-p_5584659 (1).png
@@ -71,6 +84,8 @@ LV_IMG_DECLARE(ui_img_1548857385);    // assets\wifi_5915249 (1).png
 LV_IMG_DECLARE(ui_img_1896724463);    // assets\setting_7518375 (1).png
 LV_IMG_DECLARE(ui_img_1924809568);    // assets\itunes_1384045 (1).png
 LV_IMG_DECLARE(ui_img_1600593050);    // assets\car-parking_3555291 (1).png
+LV_IMG_DECLARE(ui_img_2008805362);    // assets\location_15917865 (1).png
+LV_IMG_DECLARE(ui_img_maps_1_png);    // assets\maps_1.png
 
 
 
