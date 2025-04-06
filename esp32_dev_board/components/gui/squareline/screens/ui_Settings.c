@@ -134,5 +134,8 @@ void ui_Settings_screen_init(void)
     lv_label_set_text(ui_LeftSignalizationLabel1, "Auto");
 
     lv_obj_add_event_cb(ui_SaveButton, ui_event_SaveButton, LV_EVENT_ALL, NULL);
+    lv_obj_add_event_cb(ui_Left_Signalization, ui_event_Left_Signalization, LV_EVENT_ALL, NULL);
+    lv_obj_add_event_cb(ui_Right_signalization, ui_event_Right_signalization, LV_EVENT_ALL, NULL);
+    lv_obj_add_event_cb(ui_LightsButton, ui_event_LightsButton, LV_EVENT_ALL, NULL);
 
 }

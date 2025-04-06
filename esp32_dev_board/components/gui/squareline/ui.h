@@ -57,10 +57,13 @@ extern lv_obj_t * ui_SliderSound;
 extern lv_obj_t * ui_SliderLight;
 extern lv_obj_t * ui_SoundLabel;
 extern lv_obj_t * ui_LightLabel;
+void ui_event_Left_Signalization(lv_event_t * e);
 extern lv_obj_t * ui_Left_Signalization;
 extern lv_obj_t * ui_LeftSignalizationLabel;
+void ui_event_Right_signalization(lv_event_t * e);
 extern lv_obj_t * ui_Right_signalization;
 extern lv_obj_t * ui_RightSignalizationLabel;
+void ui_event_LightsButton(lv_event_t * e);
 extern lv_obj_t * ui_LightsButton;
 extern lv_obj_t * ui_LeftSignalizationLabel1;
 // SCREEN: ui_CarInfo

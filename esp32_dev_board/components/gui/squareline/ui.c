@@ -56,10 +56,13 @@ lv_obj_t * ui_SliderSound;
 lv_obj_t * ui_SliderLight;
 lv_obj_t * ui_SoundLabel;
 lv_obj_t * ui_LightLabel;
+void ui_event_Left_Signalization(lv_event_t * e);
 lv_obj_t * ui_Left_Signalization;
 lv_obj_t * ui_LeftSignalizationLabel;
+void ui_event_Right_signalization(lv_event_t * e);
 lv_obj_t * ui_Right_signalization;
 lv_obj_t * ui_RightSignalizationLabel;
+void ui_event_LightsButton(lv_event_t * e);
 lv_obj_t * ui_LightsButton;
 lv_obj_t * ui_LeftSignalizationLabel1;
 
@@ -167,6 +170,30 @@ void ui_event_SaveButton(lv_event_t * e)
     lv_obj_t * target = lv_event_get_target(e);
     if(event_code == LV_EVENT_CLICKED) {
         SaveButtonCb(e);
+    }
+}
+void ui_event_Left_Signalization(lv_event_t * e)
+{
+    lv_event_code_t event_code = lv_event_get_code(e);
+    lv_obj_t * target = lv_event_get_target(e);
+    if(event_code == LV_EVENT_CLICKED) {
+        LeftSignalCb(e);
+    }
+}
+void ui_event_Right_signalization(lv_event_t * e)
+{
+    lv_event_code_t event_code = lv_event_get_code(e);
+    lv_obj_t * target = lv_event_get_target(e);
+    if(event_code == LV_EVENT_CLICKED) {
+        RightSignalCb(e);
+    }
+}
+void ui_event_LightsButton(lv_event_t * e)
+{
+    lv_event_code_t event_code = lv_event_get_code(e);
+    lv_obj_t * target = lv_event_get_target(e);
+    if(event_code == LV_EVENT_CLICKED) {
+        autoLightsCb(e);
     }
 }
 void ui_event_CarInfoBackButton(lv_event_t * e)

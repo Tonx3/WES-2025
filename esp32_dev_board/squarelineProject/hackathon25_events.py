@@ -34,3 +34,15 @@ def SaveButtonCb(event_struct):
 def HomeParkCb(event_struct):
     return
 
+
+def autoLightsCb(event_struct):
+    return
+
+
+def LeftSignalCb(event_struct):
+    return
+
+
+def RightSignalCb(event_struct):
+    return
+
