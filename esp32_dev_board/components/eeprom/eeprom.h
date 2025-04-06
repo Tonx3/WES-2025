@@ -15,7 +15,7 @@
 /*--------------------------- TYPEDEFS AND STRUCTS ---------------------------*/
 /*--------------------------- EXTERN -----------------------------------------*/
 /*--------------------------- GLOBAL FUNCTION PROTOTYPES ---------------------*/
-void eeprom_read(uint8_t *data, uint32_t size, uint8_t address);
-void eeprom_write(uint8_t *data, uint32_t size, uint8_t address);
+void eeprom_read(uint8_t *data, uint8_t address);
+void eeprom_write(uint8_t data, uint8_t address);
 
 #endif /*I2C_H*/

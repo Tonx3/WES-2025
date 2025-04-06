@@ -6,10 +6,9 @@
  *
  */
 
-
 /*--------------------------- INCLUDES ---------------------------------------*/
 #include "button.h"
-//#include "btnqueue.h"
+// #include "btnqueue.h"
 #include "driver/gpio.h"
 #include "esp_err.h"
 #include "freertos/FreeRTOS.h"
@@ -24,11 +23,11 @@
 #define GPIO_BUTTON_3 (33U)
 #define GPIO_BUTTON_4 (25U)
 
-#define TIMER_PERIOD            (5)
-#define NUM_BUTTONS             (4)
-#define DEBOUNCE_PAUSE          (50)
-#define HOLD_MIN_TIME           (500)
-#define MS_TO_TIMER_TICKS(X)    (X/TIMER_PERIOD)
+#define TIMER_PERIOD         (5)
+#define NUM_BUTTONS          (4)
+#define DEBOUNCE_PAUSE       (50)
+#define HOLD_MIN_TIME        (500)
+#define MS_TO_TIMER_TICKS(X) (X / TIMER_PERIOD)
 
 #define DELAY_TIME_MS (1000)
 
@@ -46,7 +45,8 @@ static int button_timer_init();
 static void vTimerCallback(TimerHandle_t xTimer);
 /*--------------------------- VARIABLES --------------------------------------*/
 TimerHandle_t xDebounceTimer;
-const int buttonPins[NUM_BUTTONS] = {GPIO_BUTTON_1, GPIO_BUTTON_2, GPIO_BUTTON_3, GPIO_BUTTON_4};
+const int buttonPins[NUM_BUTTONS] = {GPIO_BUTTON_1, GPIO_BUTTON_2,
+                                     GPIO_BUTTON_3, GPIO_BUTTON_4};
 volatile bool buttonIsrCalled[NUM_BUTTONS] = {false, false, false, false};
 volatile bool buttonReleased[NUM_BUTTONS] = {0, 0, 0, 0};
 volatile int buttonTimerTicksPassed[NUM_BUTTONS] = {0, 0, 0, 0};
@@ -58,7 +58,6 @@ static void IRAM_ATTR _btn_1_isr(void *p_arg)
     gpio_intr_disable(buttonPins[0]);
     buttonIsrCalled[0] = true;
     buttonReleased[0] = false;
-    
 }
 
 static void IRAM_ATTR _btn_2_isr(void *p_arg)
@@ -87,7 +86,8 @@ static void IRAM_ATTR _btn_4_isr(void *p_arg)
 
 static int button_timer_init()
 {
-    xDebounceTimer = xTimerCreate("Debounce Timer", pdMS_TO_TICKS(TIMER_PERIOD), pdTRUE, (NULL), &vTimerCallback);
+    xDebounceTimer = xTimerCreate("Debounce Timer", pdMS_TO_TICKS(TIMER_PERIOD),
+                                  pdTRUE, (NULL), &vTimerCallback);
     return 0;
 }
 
@@ -126,23 +126,22 @@ static esp_err_t _button_init(uint8_t pin, button_pressed_isr_t p_isr)
 
 static void vTimerCallback(TimerHandle_t xTimer)
 {
-    for(int i = 0; i <NUM_BUTTONS; ++i)
-    {
-        if(buttonIsrCalled[i]) 
-        {
+    for (int i = 0; i < NUM_BUTTONS; ++i) {
+        if (buttonIsrCalled[i]) {
             bool buttonPressed = gpio_get_level(buttonPins[i]);
-            if(buttonPressed && ++buttonTimerTicksPassed[i] == MS_TO_TIMER_TICKS(DEBOUNCE_PAUSE))
-            {
+            if (buttonPressed
+                && ++buttonTimerTicksPassed[i]
+                       == MS_TO_TIMER_TICKS(DEBOUNCE_PAUSE)) {
                 // Button is pressed
-            }
-            else if(buttonPressed && ++buttonTimerTicksPassed[i] > MS_TO_TIMER_TICKS(HOLD_MIN_TIME))
-            {
+            } else if (buttonPressed
+                       && ++buttonTimerTicksPassed[i]
+                              > MS_TO_TIMER_TICKS(HOLD_MIN_TIME)) {
                 // Button is helled
-            }
-            else if(!buttonPressed && ++buttonTimerTicksPassed[i] > MS_TO_TIMER_TICKS(DEBOUNCE_PAUSE))
-            {
+            } else if (!buttonPressed
+                       && ++buttonTimerTicksPassed[i]
+                              > MS_TO_TIMER_TICKS(DEBOUNCE_PAUSE)) {
                 // Button is released
-                buttonReleased[i]=true;
+                buttonReleased[i] = true;
                 buttonTimerTicksPassed[i] = 0;
                 buttonIsrCalled[i] = false;
                 gpio_intr_enable(buttonPins[i]);
@@ -154,10 +153,10 @@ static void vTimerCallback(TimerHandle_t xTimer)
 
 int button_init()
 {
-    _button_init(GPIO_BUTTON_1, _btn_1_isr);
-    _button_init(GPIO_BUTTON_2, _btn_2_isr);
-    _button_init(GPIO_BUTTON_3, _btn_3_isr);
-    _button_init(GPIO_BUTTON_4, _btn_4_isr);
-    button_timer_init();
+    //_button_init(GPIO_BUTTON_1, _btn_1_isr);
+    //_button_init(GPIO_BUTTON_2, _btn_2_isr);
+    //_button_init(GPIO_BUTTON_3, _btn_3_isr);
+    //_button_init(GPIO_BUTTON_4, _btn_4_isr);
+    // button_timer_init();
     return 0;
 }

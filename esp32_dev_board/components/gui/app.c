@@ -29,6 +29,7 @@
 #include "wifi.h"
 #define LOG_LOCAL_LEVEL ESP_LOG_VERBOSE
 #include "btnqueue.h"
+#include "eeprom.h"
 #include "esp_log.h"
 #include "i2c.h"
 #include "i2s.h"
@@ -60,6 +61,9 @@ static char temp_str[32];
 static char time_str[32];
 static char date_str[32];
 static char hum_str[32];
+static char speed_str[16];
+static char dist_str[32];
+int kmh = 0;
 QueueHandle_t music_queue;
 QueueHandle_t buzzer_queue;
 int music_command = 1;
@@ -69,6 +73,7 @@ QueueHandle_t dark_queue;
 int dark_command = 1;
 int light_command = 2;
 static uint8_t lights_mode = 1; // 0 - off, 1 - automatic, 2 - on
+static bool isParkMode;
 /*--------------------------- STATIC FUNCTIONS -------------------------------*/
 static void _buzzer_task(void *p_parameter)
 {
@@ -115,6 +120,12 @@ static void _ir_read_task(void *p_parameter)
     while (true) {
         int val = ir_read();
         ESP_LOGI(TAG, "IR sensor reading:  %d", val);
+        if (kmh > 20 && val > 10) {
+            if (!isParkMode) {
+                // led_on_pwm(LED_ID_BUZZER, 50);
+            }
+            // znaci da nisi vezan
+        }
         vTaskDelay(3330 / portTICK_PERIOD_MS);
     }
 }
@@ -123,8 +134,16 @@ static void _pot_read_task(void *p_parameter)
 {
     while (true) {
         int val = pot_read();
-        ESP_LOGI(TAG, "Potentiometer reading:  %d", val);
-        vTaskDelay(3330 / portTICK_PERIOD_MS);
+        kmh = val * 130 / 100;
+
+        snprintf(speed_str, sizeof(speed_str), "%3d km/h", kmh);
+        // ESP_LOGI(TAG, "Potentiometer reading:  %d", val);
+        lv_label_set_text(ui_SpeedLabel, speed_str);
+        vTaskDelay(333 / portTICK_PERIOD_MS);
+        static float total_distance = 0;
+        total_distance += kmh * (0.333 / 3600.0); // result is in kilometers
+        snprintf(dist_str, sizeof(dist_str), "%.1f km", total_distance);
+        lv_label_set_text(ui_Distance_Label, dist_str);
     }
 }
 
@@ -141,8 +160,14 @@ static void _ultrasonic_task(void *p_parameter)
 static void _app_task(void *p_parameter)
 {
     (void)p_parameter;
+    uint8_t write_buff = 0xBB;
+    uint8_t read_buff;
     // APP TASK CE BITI JEDINI TASK KOJI OVDJE RADI SVE NA LOOPU (ZA SADA)
     for (;;) {
+        eeprom_write(write_buff, 0x00); // write to eeprom
+        vTaskDelay(1000 / portTICK_PERIOD_MS);
+        eeprom_read(&read_buff, 0x00); // read from eeprom
+        ESP_LOGI(TAG, "EEPROM read: %x", read_buff);
         vTaskDelay(1000 / portTICK_PERIOD_MS);
     }
 }
@@ -276,7 +301,7 @@ static void _dark_task(void *p_parameter)
                 // GASI LEDICE LEDICE
             }
         }
-        vTaskDelay(5000 / portTICK_PERIOD_MS);
+        vTaskDelay(2500 / portTICK_PERIOD_MS);
     }
 }
 
