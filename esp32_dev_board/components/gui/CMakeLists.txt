@@ -11,12 +11,15 @@ idf_component_register(
         "squareline/screens/ui_CarInfo.c"
         "squareline/screens/ui_ParkMode.c"
         "squareline/screens/ui_Settings.c"
+        "squareline/screens/ui_MapScreen.c"
 
         "squareline/images/ui_img_730112842.c"
         "squareline/images/ui_img_1548857385.c"
         "squareline/images/ui_img_1896724463.c"
         "squareline/images/ui_img_1924809568.c"
         "squareline/images/ui_img_1600593050.c"
+        "squareline/images/ui_img_2008805362.c"
+        "squareline/images/ui_img_maps_1_png.c"
 
 
         "squareline/ui.c"
