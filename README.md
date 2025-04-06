@@ -1,6 +1,7 @@
 # WES-2025
 Workshop on Embedded Systems - Hackaton
 Team project by: Antonia Turkovic, Marko Srpak and Leonardo Max Golusin
+Ime tima: sudo rm -rf /
 
 ## How to start
 
@@ -35,12 +36,17 @@ cd esp32_dev_board/components/lvgl_esp32_drivers
 git apply ../lvgl_esp32_drivers_8-3.patch
 ```
 
-6. Go back to main folder
+6. Go back to main folder od esp32_dev_board
 ```
 cd ../../
 ```
 
 7. You can now build and flash the device.
+
+idf.py build
+idf.py flash
+
+*IMPORTANT* Koristiti verziju ESP-IDF 5.0.8., nije provjereno radi li na nižim verzijama.
 
 ## Kako spojiti senzore
 
