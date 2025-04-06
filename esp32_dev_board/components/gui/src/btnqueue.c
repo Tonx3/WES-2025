@@ -38,6 +38,7 @@ const int btn_back = BTN_BACK;
 const int btn_park = BTN_PARK;
 const int btn_save = BTN_SAVE;
 const int btn_music = BTN_MUSIC;
+const int btn_home = BTN_HOME;
 
 static const char *TAG = "btnqueue";
 /*--------------------------- STATIC FUNCTIONS -------------------------------*/
@@ -114,7 +115,16 @@ void _button_task(void *p_parameter)
         case BTN_MUSIC :
             xQueueSend(music_queue, &music_command, 0);
             break;
-
+        case BTN_PARK:
+            _ui_screen_change(&ui_ParkMode, LV_SCR_LOAD_ANIM_FADE_ON, 500, 0, &ui_ParkMode_screen_init);
+            int i = 1;
+            xQueueSend(buzzer_queue, &i, 0);
+            break;
+        case BTN_HOME:
+            _ui_screen_change(&ui_HomeScreeen, LV_SCR_LOAD_ANIM_FADE_ON, 500, 0, &ui_HomeScreeen_screen_init);
+            i = 2;
+            xQueueSend(buzzer_queue, &i, 0);
+            break;
         default :
             ESP_LOGW(TAG, "Unknown button pressed: %d", pressed_button);
             break;

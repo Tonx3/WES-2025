@@ -16,7 +16,10 @@
 /*--------------------------- TYPEDEFS AND STRUCTS ---------------------------*/
 /*--------------------------- EXTERN -----------------------------------------*/
 extern QueueHandle_t music_queue;
+extern QueueHandle_t buzzer_queue;
 extern int music_command;
+extern int buzzer_activate_command;
+extern int buzzer_disable_command;
 /*--------------------------- GLOBAL FUNCTION PROTOTYPES ---------------------*/
 
 void app_init(void);

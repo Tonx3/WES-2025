@@ -53,6 +53,7 @@ static void _time_task(void *p_parameter);
 static void _ultrasonic_task(void *p_parameter);
 static void _pot_read_task(void *p_parameter);
 static void _ir_read_task(void *p_parameter);
+static void _buzzer_task(void *p_parameter);
 /*--------------------------- VARIABLES --------------------------------------*/
 static const char *TAG = "app";
 static char temp_str[32];
@@ -60,12 +61,55 @@ static char time_str[32];
 static char date_str[32];
 static char hum_str[32];
 QueueHandle_t music_queue;
+QueueHandle_t buzzer_queue;
 int music_command = 1;
+int buzzer_activate_command = 1;
+int buzzer_disable_command = 1;
 QueueHandle_t dark_queue;
 int dark_command = 1;
 int light_command = 2;
 static uint8_t lights_mode = 1; // 0 - off, 1 - automatic, 2 - on
 /*--------------------------- STATIC FUNCTIONS -------------------------------*/
+static void _buzzer_task(void *p_parameter)
+{
+    (void)p_parameter;
+    int received = 0;
+    buzzer_queue = xQueueCreate(1, sizeof(int));
+    bool buzzer_active = false;
+    while (true) {
+        xQueueReceive(buzzer_queue, &received, 0);
+        if (received == 1) {
+            buzzer_active = true;
+            ESP_LOGI(TAG, "Buzzer ON\n");
+        } else if(received == 2)
+        {
+            buzzer_active = false;
+            ESP_LOGI(TAG, "Buzzer OFF\n");
+        } else {
+            ESP_LOGI(TAG, "Unknown command\n");
+        }
+
+        if(buzzer_active)
+        {
+            double distance;
+            ultrasonic_measure_cm(&distance);
+            ESP_LOGI(TAG, "Distance%.2f", distance);
+            int percentage = 0;
+            if(150 > distance)
+            {
+                percentage = 50;
+            }
+            led_on_pwm(LED_ID_BUZZER, percentage);
+        }
+        else
+        {
+            led_on_pwm(LED_ID_BUZZER, 0);
+        }
+
+        vTaskDelay(1000 / portTICK_PERIOD_MS);
+    }
+}
+
 static void _ir_read_task(void *p_parameter)
 {
     while (true) {
@@ -307,4 +351,5 @@ void app_init(void)
     xTaskCreatePinnedToCore(_button_task, "button", 4096, NULL, 0, NULL, 0);
     xTaskCreatePinnedToCore(_music_task, "music", 4096, NULL, 0, NULL, 0);
     xTaskCreatePinnedToCore(_dark_task, "dark", 4096, NULL, 0, NULL, 0);
+    xTaskCreatePinnedToCore(_buzzer_task, "buzzer", 4096, NULL, 0, NULL, 0);
 }

@@ -28,6 +28,7 @@ enum all_btns {
     BTN_BACK,  // Back or park
     BTN_SAVE,  // Save button
     BTN_MUSIC, // Music screen / music control
+    BTN_HOME,  // GO home from park screen
 };
 /*--------------------------- EXTERN -----------------------------------------*/
 extern QueueHandle_t btn_queue;
@@ -41,6 +42,7 @@ extern const int btn_park;
 extern const int btn_back;
 extern const int btn_save;
 extern const int btn_music;
+extern const int btn_home;
 /*--------------------------- GLOBAL FUNCTION PROTOTYPES ---------------------*/
 void init_button_queue();
 void _button_task(void *p_parameter);
