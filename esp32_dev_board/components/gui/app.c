@@ -99,15 +99,28 @@ static void _buzzer_task(void *p_parameter)
             double distance;
             ultrasonic_measure_cm(&distance);
             ESP_LOGI(TAG, "Distance%.2f", distance);
-            int percentage = 0;
-            if(150 > distance)
+            int percentage = 100;
+            if(distance>150)
             {
-                percentage = 50;
+                led_blinking(LED_ID_BUZZER, 100, false);
+                led_on_pwm(LED_ID_BUZZER, 0);
+                
             }
-            led_on_pwm(LED_ID_BUZZER, percentage);
+            else if(distance < 150 && distance > 50)
+            {
+                percentage = 400;
+                led_blinking(LED_ID_BUZZER, percentage, true);
+            }
+            else if(distance<50)
+            {
+                
+                percentage = 250;
+                led_blinking(LED_ID_BUZZER, percentage, true);
+            }
         }
         else
         {
+            led_blinking(LED_ID_BUZZER, 100, false);
             led_on_pwm(LED_ID_BUZZER, 0);
         }
 

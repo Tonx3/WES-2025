@@ -13,6 +13,7 @@ SET(SOURCES screens/ui_HomeScreeen.c
     images/ui_img_1924809568.c
     images/ui_img_1600593050.c
     images/ui_img_2008805362.c
+    images/ui_img_1599370223.c
     images/ui_img_maps_1_png.c)
 
 add_library(ui ${SOURCES})

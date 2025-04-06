@@ -38,3 +38,18 @@ void HomeParkCb(lv_event_t * e)
 {
     xQueueSendFromISR(btn_queue, &btn_home, pdFALSE);
 }
+
+void LeftSignalCb(lv_event_t * e)
+{
+	// Your code here
+}
+
+void RightSignalCb(lv_event_t * e)
+{
+	// Your code here
+}
+
+void autoLightsCb(lv_event_t * e)
+{
+	// Your code here
+}

@@ -16,6 +16,9 @@ void WifiProvisionCb(lv_event_t * e);
 void MusicButtonCb(lv_event_t * e);
 void HomeParkCb(lv_event_t * e);
 void SaveButtonCb(lv_event_t * e);
+void LeftSignalCb(lv_event_t * e);
+void RightSignalCb(lv_event_t * e);
+void autoLightsCb(lv_event_t * e);
 
 #ifdef __cplusplus
 } /*extern "C"*/

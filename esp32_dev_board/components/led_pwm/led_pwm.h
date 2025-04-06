@@ -41,5 +41,6 @@ int led_on_pwm(int led_id, int pwm_percentage);
 int led_on(int led_id);
 int led_off(int led_id);
 int led_toggle(int led_id);
+void led_blinking(int led_id, int period, bool start);
 
 #endif /*LED_PWM_H*/

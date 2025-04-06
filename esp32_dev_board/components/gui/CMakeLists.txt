@@ -19,6 +19,7 @@ idf_component_register(
         "squareline/images/ui_img_1924809568.c"
         "squareline/images/ui_img_1600593050.c"
         "squareline/images/ui_img_2008805362.c"
+        "squareline/images/ui_img_1599370223.c"
         "squareline/images/ui_img_maps_1_png.c"
 
 

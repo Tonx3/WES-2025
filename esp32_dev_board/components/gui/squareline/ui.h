@@ -42,10 +42,10 @@ extern lv_obj_t * ui_Image6;
 // SCREEN: ui_ParkMode
 void ui_ParkMode_screen_init(void);
 extern lv_obj_t * ui_ParkMode;
-extern lv_obj_t * ui_CamImage;
 void ui_event_Homepark(lv_event_t * e);
 extern lv_obj_t * ui_Homepark;
 extern lv_obj_t * ui_HomeParkLabel;
+extern lv_obj_t * ui_ReverseCam;
 // SCREEN: ui_Settings
 void ui_Settings_screen_init(void);
 extern lv_obj_t * ui_Settings;
@@ -57,10 +57,13 @@ extern lv_obj_t * ui_SliderSound;
 extern lv_obj_t * ui_SliderLight;
 extern lv_obj_t * ui_SoundLabel;
 extern lv_obj_t * ui_LightLabel;
+void ui_event_Left_Signalization(lv_event_t * e);
 extern lv_obj_t * ui_Left_Signalization;
 extern lv_obj_t * ui_LeftSignalizationLabel;
+void ui_event_Right_signalization(lv_event_t * e);
 extern lv_obj_t * ui_Right_signalization;
 extern lv_obj_t * ui_RightSignalizationLabel;
+void ui_event_LightsButton(lv_event_t * e);
 extern lv_obj_t * ui_LightsButton;
 extern lv_obj_t * ui_LeftSignalizationLabel1;
 // SCREEN: ui_CarInfo
@@ -93,6 +96,7 @@ LV_IMG_DECLARE(ui_img_1896724463);    // assets\setting_7518375 (1).png
 LV_IMG_DECLARE(ui_img_1924809568);    // assets\itunes_1384045 (1).png
 LV_IMG_DECLARE(ui_img_1600593050);    // assets\car-parking_3555291 (1).png
 LV_IMG_DECLARE(ui_img_2008805362);    // assets\location_15917865 (1).png
+LV_IMG_DECLARE(ui_img_1599370223);    // assets\reverse_park (1).png
 LV_IMG_DECLARE(ui_img_maps_1_png);    // assets\maps_1.png
 
 
