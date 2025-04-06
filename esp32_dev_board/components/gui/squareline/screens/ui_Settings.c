@@ -82,6 +82,57 @@ void ui_Settings_screen_init(void)
     lv_obj_set_style_text_color(ui_LightLabel, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_opa(ui_LightLabel, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
 
+    ui_Left_Signalization = lv_btn_create(ui_Settings);
+    lv_obj_set_width(ui_Left_Signalization, 64);
+    lv_obj_set_height(ui_Left_Signalization, 38);
+    lv_obj_set_x(ui_Left_Signalization, -73);
+    lv_obj_set_y(ui_Left_Signalization, -39);
+    lv_obj_set_align(ui_Left_Signalization, LV_ALIGN_CENTER);
+    lv_obj_add_flag(ui_Left_Signalization, LV_OBJ_FLAG_SCROLL_ON_FOCUS);     /// Flags
+    lv_obj_clear_flag(ui_Left_Signalization, LV_OBJ_FLAG_SCROLLABLE);      /// Flags
+    lv_obj_set_style_bg_color(ui_Left_Signalization, lv_color_hex(0x5275A1), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_bg_opa(ui_Left_Signalization, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
+
+    ui_LeftSignalizationLabel = lv_label_create(ui_Left_Signalization);
+    lv_obj_set_width(ui_LeftSignalizationLabel, LV_SIZE_CONTENT);   /// 1
+    lv_obj_set_height(ui_LeftSignalizationLabel, LV_SIZE_CONTENT);    /// 1
+    lv_obj_set_align(ui_LeftSignalizationLabel, LV_ALIGN_CENTER);
+    lv_label_set_text(ui_LeftSignalizationLabel, "< --");
+
+    ui_Right_signalization = lv_btn_create(ui_Settings);
+    lv_obj_set_width(ui_Right_signalization, 64);
+    lv_obj_set_height(ui_Right_signalization, 38);
+    lv_obj_set_x(ui_Right_signalization, 81);
+    lv_obj_set_y(ui_Right_signalization, -39);
+    lv_obj_set_align(ui_Right_signalization, LV_ALIGN_CENTER);
+    lv_obj_add_flag(ui_Right_signalization, LV_OBJ_FLAG_SCROLL_ON_FOCUS);     /// Flags
+    lv_obj_clear_flag(ui_Right_signalization, LV_OBJ_FLAG_SCROLLABLE);      /// Flags
+    lv_obj_set_style_bg_color(ui_Right_signalization, lv_color_hex(0x5275A1), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_bg_opa(ui_Right_signalization, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
+
+    ui_RightSignalizationLabel = lv_label_create(ui_Right_signalization);
+    lv_obj_set_width(ui_RightSignalizationLabel, LV_SIZE_CONTENT);   /// 1
+    lv_obj_set_height(ui_RightSignalizationLabel, LV_SIZE_CONTENT);    /// 1
+    lv_obj_set_align(ui_RightSignalizationLabel, LV_ALIGN_CENTER);
+    lv_label_set_text(ui_RightSignalizationLabel, "-- >");
+
+    ui_LightsButton = lv_btn_create(ui_Settings);
+    lv_obj_set_width(ui_LightsButton, 64);
+    lv_obj_set_height(ui_LightsButton, 38);
+    lv_obj_set_x(ui_LightsButton, 3);
+    lv_obj_set_y(ui_LightsButton, -39);
+    lv_obj_set_align(ui_LightsButton, LV_ALIGN_CENTER);
+    lv_obj_add_flag(ui_LightsButton, LV_OBJ_FLAG_SCROLL_ON_FOCUS);     /// Flags
+    lv_obj_clear_flag(ui_LightsButton, LV_OBJ_FLAG_SCROLLABLE);      /// Flags
+    lv_obj_set_style_bg_color(ui_LightsButton, lv_color_hex(0x5275A1), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_bg_opa(ui_LightsButton, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
+
+    ui_LeftSignalizationLabel1 = lv_label_create(ui_LightsButton);
+    lv_obj_set_width(ui_LeftSignalizationLabel1, LV_SIZE_CONTENT);   /// 1
+    lv_obj_set_height(ui_LeftSignalizationLabel1, LV_SIZE_CONTENT);    /// 1
+    lv_obj_set_align(ui_LeftSignalizationLabel1, LV_ALIGN_CENTER);
+    lv_label_set_text(ui_LeftSignalizationLabel1, "Auto");
+
     lv_obj_add_event_cb(ui_SaveButton, ui_event_SaveButton, LV_EVENT_ALL, NULL);
 
 }

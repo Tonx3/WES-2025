@@ -75,6 +75,7 @@ void ui_CarInfo_screen_init(void)
     lv_obj_set_x(ui_TiltNum, -96);
     lv_obj_set_y(ui_TiltNum, 82);
     lv_obj_set_align(ui_TiltNum, LV_ALIGN_CENTER);
+    lv_label_set_text(ui_TiltNum, "0%");
     lv_obj_set_style_text_color(ui_TiltNum, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_opa(ui_TiltNum, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_font(ui_TiltNum, &lv_font_montserrat_20, LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -85,6 +86,7 @@ void ui_CarInfo_screen_init(void)
     lv_obj_set_x(ui_InclineNum, 90);
     lv_obj_set_y(ui_InclineNum, 78);
     lv_obj_set_align(ui_InclineNum, LV_ALIGN_CENTER);
+    lv_label_set_text(ui_InclineNum, "0%");
     lv_obj_set_style_text_color(ui_InclineNum, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_opa(ui_InclineNum, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_font(ui_InclineNum, &lv_font_montserrat_20, LV_PART_MAIN | LV_STATE_DEFAULT);

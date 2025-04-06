@@ -56,6 +56,12 @@ lv_obj_t * ui_SliderSound;
 lv_obj_t * ui_SliderLight;
 lv_obj_t * ui_SoundLabel;
 lv_obj_t * ui_LightLabel;
+lv_obj_t * ui_Left_Signalization;
+lv_obj_t * ui_LeftSignalizationLabel;
+lv_obj_t * ui_Right_signalization;
+lv_obj_t * ui_RightSignalizationLabel;
+lv_obj_t * ui_LightsButton;
+lv_obj_t * ui_LeftSignalizationLabel1;
 
 
 // SCREEN: ui_CarInfo
