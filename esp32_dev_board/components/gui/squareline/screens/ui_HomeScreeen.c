@@ -137,8 +137,8 @@ void ui_HomeScreeen_screen_init(void)
     ui_TimeLabel = lv_label_create(ui_HomeScreeen);
     lv_obj_set_width(ui_TimeLabel, LV_SIZE_CONTENT);   /// 1
     lv_obj_set_height(ui_TimeLabel, LV_SIZE_CONTENT);    /// 1
-    lv_obj_set_x(ui_TimeLabel, -91);
-    lv_obj_set_y(ui_TimeLabel, -89);
+    lv_obj_set_x(ui_TimeLabel, -79);
+    lv_obj_set_y(ui_TimeLabel, -81);
     lv_obj_set_align(ui_TimeLabel, LV_ALIGN_CENTER);
     lv_label_set_text(ui_TimeLabel, "Time");
     lv_obj_set_style_text_color(ui_TimeLabel, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -148,8 +148,8 @@ void ui_HomeScreeen_screen_init(void)
     ui_DateLabel = lv_label_create(ui_HomeScreeen);
     lv_obj_set_width(ui_DateLabel, LV_SIZE_CONTENT);   /// 1
     lv_obj_set_height(ui_DateLabel, LV_SIZE_CONTENT);    /// 1
-    lv_obj_set_x(ui_DateLabel, -99);
-    lv_obj_set_y(ui_DateLabel, -56);
+    lv_obj_set_x(ui_DateLabel, -83);
+    lv_obj_set_y(ui_DateLabel, -48);
     lv_obj_set_align(ui_DateLabel, LV_ALIGN_CENTER);
     lv_label_set_text(ui_DateLabel, "Date");
     lv_obj_set_style_text_color(ui_DateLabel, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -158,8 +158,8 @@ void ui_HomeScreeen_screen_init(void)
     ui_TempLabel = lv_label_create(ui_HomeScreeen);
     lv_obj_set_width(ui_TempLabel, LV_SIZE_CONTENT);   /// 1
     lv_obj_set_height(ui_TempLabel, LV_SIZE_CONTENT);    /// 1
-    lv_obj_set_x(ui_TempLabel, 106);
-    lv_obj_set_y(ui_TempLabel, -106);
+    lv_obj_set_x(ui_TempLabel, 119);
+    lv_obj_set_y(ui_TempLabel, -101);
     lv_obj_set_align(ui_TempLabel, LV_ALIGN_CENTER);
     lv_label_set_text(ui_TempLabel, "Temperature");
     lv_obj_set_style_text_color(ui_TempLabel, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -168,8 +168,8 @@ void ui_HomeScreeen_screen_init(void)
     ui_HumidityLabel = lv_label_create(ui_HomeScreeen);
     lv_obj_set_width(ui_HumidityLabel, LV_SIZE_CONTENT);   /// 1
     lv_obj_set_height(ui_HumidityLabel, LV_SIZE_CONTENT);    /// 1
-    lv_obj_set_x(ui_HumidityLabel, 107);
-    lv_obj_set_y(ui_HumidityLabel, -82);
+    lv_obj_set_x(ui_HumidityLabel, 119);
+    lv_obj_set_y(ui_HumidityLabel, -76);
     lv_obj_set_align(ui_HumidityLabel, LV_ALIGN_CENTER);
     lv_label_set_text(ui_HumidityLabel, "Hum");
     lv_obj_set_style_text_color(ui_HumidityLabel, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);

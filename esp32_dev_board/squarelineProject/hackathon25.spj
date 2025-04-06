@@ -3504,8 +3504,8 @@
                 "flags": 17,
                 "strtype": "OBJECT/Position",
                 "intarray": [
-                  -91,
-                  -89
+                  -79,
+                  -81
                 ],
                 "InheritedType": 7
               },
@@ -3816,8 +3816,8 @@
                 "flags": 17,
                 "strtype": "OBJECT/Position",
                 "intarray": [
-                  -99,
-                  -56
+                  -83,
+                  -48
                 ],
                 "InheritedType": 7
               },
@@ -4122,8 +4122,8 @@
                 "flags": 17,
                 "strtype": "OBJECT/Position",
                 "intarray": [
-                  106,
-                  -106
+                  119,
+                  -101
                 ],
                 "InheritedType": 7
               },
@@ -4429,8 +4429,8 @@
                 "flags": 17,
                 "strtype": "OBJECT/Position",
                 "intarray": [
-                  107,
-                  -82
+                  119,
+                  -76
                 ],
                 "InheritedType": 7
               },
@@ -13495,7 +13495,7 @@
     "theme_color2": 0,
     "uiExportFolderPath": "D:\\WES2025\\WES-2025\\esp32_dev_board\\components\\gui\\squareline",
     "projectExportFolderPath": "",
-    "backup_cnt": 86,
+    "backup_cnt": 93,
     "autosave_cnt": 0,
     "lvgl_version": "8.3.6",
     "callfuncsexport": null,
