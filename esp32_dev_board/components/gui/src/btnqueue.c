@@ -30,10 +30,6 @@
 /*--------------------------- VARIABLES --------------------------------------*/
 QueueHandle_t btn_queue;
 bool wifi_is_connected = false;
-const int btn_up = BTN_UP;
-const int btn_right = BTN_RIGHT;
-const int btn_down = BTN_DOWN;
-const int btn_left = BTN_LEFT;
 const int btn_prov = BTN_PROV;
 const int btn_conn = BTN_CONN;
 const int btn_back = BTN_BACK;
@@ -44,9 +40,9 @@ const int btn_home = BTN_HOME;
 const int btn_rblink = BTN_RBLINK;
 const int btn_lblink = BTN_LBLINK;
 const int btn_light = BTN_LIGHT;
-uint8_t lights_mode;
-uint8_t light_amount = 0;
-uint8_t sound_amount = 0;
+volatile uint8_t lights_mode = 1;
+volatile uint8_t light_amount = 0;
+volatile uint8_t sound_amount = 0;
 static char text_buff[32];
 
 static const char *TAG = "btnqueue";
@@ -105,6 +101,10 @@ void _button_task(void *p_parameter)
             light_amount = lv_slider_get_value(ui_SliderLight);
             sound_amount = lv_slider_get_value(ui_SliderSound);
             eeprom_write(lights_mode, 0x00);
+            eeprom_write(light_amount, 0x10);
+            eeprom_write(sound_amount, 0x20);
+            _ui_screen_change(&ui_HomeScreeen, LV_SCR_LOAD_ANIM_FADE_ON, 500, 0,
+                              &ui_HomeScreeen_screen_init);
             break;
 
         case BTN_MUSIC :
@@ -124,29 +124,27 @@ void _button_task(void *p_parameter)
             break;
         case BTN_RBLINK :
             // upali ledicu na 3sec
-            static bool r_blinking=false;
+            static bool r_blinking = false;
             ESP_LOGI("BTN_QUEUE", "INSIDE RIGHT BLINK");
-            if(!r_blinking)
-            {
+            if (!r_blinking) {
+                r_blinking = true;
                 ESP_LOGI("BTN_QUEUE", "STARTING RIGHT BLINK");
                 led_blinking(LED_ID_RBLINK, 400, true);
-            }
-            else
-            {
+            } else {
+                r_blinking = false;
                 led_blinking(LED_ID_RBLINK, 400, false);
             }
             break;
         case BTN_LBLINK :
             // upali ledicu na 3sec
-            static bool l_blinking=false;
+            static bool l_blinking = false;
             ESP_LOGI("BTN_QUEUE", "INSIDE LEFT BLINK");
-            if(!l_blinking)
-            {
+            if (!l_blinking) {
+                l_blinking = true;
                 ESP_LOGI("BTN_QUEUE", "STARTING LEFT BLINK");
                 led_blinking(LED_ID_LBLINK, 400, true);
-            }
-            else
-            {
+            } else {
+                l_blinking = false;
                 led_blinking(LED_ID_LBLINK, 400, false);
             }
             break;
@@ -161,12 +159,12 @@ void _button_task(void *p_parameter)
                 lights_mode = 0;
                 snprintf(text_buff, sizeof(text_buff), "OFF");
                 lv_label_set_text(ui_LeftSignalizationLabel1, text_buff);
-                ESP_LOGI(TAG, "Dark mode activated\n");
+                led_off(LED_ID_BLUE);
             } else if (lights_mode == 0) {
                 lights_mode = 1;
                 snprintf(text_buff, sizeof(text_buff), "AUTO");
                 lv_label_set_text(ui_LeftSignalizationLabel1, text_buff);
-                ESP_LOGI(TAG, "Light mode activated\n");
+                light_amount = lv_slider_get_value(ui_SliderLight);
             }
             break;
         default :

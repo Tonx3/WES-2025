@@ -39,17 +39,17 @@ void HomeParkCb(lv_event_t *e)
     xQueueSendFromISR(btn_queue, &btn_home, pdFALSE);
 }
 
-void LeftSignalCb(lv_event_t * e)
+void LeftSignalCb(lv_event_t *e)
 {
-    xQueueSendFromISR(btn_queue, &btn_home, pdFALSE);
+    xQueueSendFromISR(btn_queue, &btn_lblink, pdFALSE);
 }
 
-void RightSignalCb(lv_event_t * e)
+void RightSignalCb(lv_event_t *e)
 {
-    xQueueSendFromISR(btn_queue, &btn_home, pdFALSE);
+    xQueueSendFromISR(btn_queue, &btn_rblink, pdFALSE);
 }
 
-void autoLightsCb(lv_event_t * e)
+void autoLightsCb(lv_event_t *e)
 {
-	// Your code here
+    xQueueSendFromISR(btn_queue, &btn_light, pdFALSE);
 }

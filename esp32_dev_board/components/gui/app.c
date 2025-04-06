@@ -98,6 +98,7 @@ static void _buzzer_task(void *p_parameter)
             ESP_LOGI(TAG, "Distance%.2f", distance);
             int percentage = 100;
             if (distance > 150) {
+                percentage = 100;
                 led_blinking(LED_ID_BUZZER, 100, false);
                 led_on_pwm(LED_ID_BUZZER, 0);
 
@@ -108,9 +109,7 @@ static void _buzzer_task(void *p_parameter)
                 percentage = 250;
                 led_blinking(LED_ID_BUZZER, percentage, true);
             }
-        }
-        else
-        {
+        } else {
             led_blinking(LED_ID_BUZZER, 100, false);
             led_on_pwm(LED_ID_BUZZER, 0);
         }
@@ -126,7 +125,9 @@ static void _ir_read_task(void *p_parameter)
         ESP_LOGI(TAG, "IR sensor reading:  %d", val);
         if (kmh > 20 && val > 10) {
             if (!isParkMode) {
-                // led_on_pwm(LED_ID_BUZZER, 50);
+                led_blinking(LED_ID_BUZZER, 100, true);
+            } else {
+                led_blinking(LED_ID_BUZZER, 100, false);
             }
             // znaci da nisi vezan
         }
@@ -164,14 +165,14 @@ static void _ultrasonic_task(void *p_parameter)
 static void _app_task(void *p_parameter)
 {
     (void)p_parameter;
-    uint8_t write_buff = 0xBB;
-    uint8_t read_buff;
-    // APP TASK CE BITI JEDINI TASK KOJI OVDJE RADI SVE NA LOOPU (ZA SADA)
+    // uint8_t write_buff = 0xBB;
+    // uint8_t read_buff;
+    //  APP TASK CE BITI JEDINI TASK KOJI OVDJE RADI SVE NA LOOPU (ZA SADA)
     for (;;) {
-        eeprom_write(write_buff, 0x00); // write to eeprom
-        vTaskDelay(1000 / portTICK_PERIOD_MS);
-        eeprom_read(&read_buff, 0x00); // read from eeprom
-        ESP_LOGI(TAG, "EEPROM read: %x", read_buff);
+        // eeprom_write(write_buff, 0x00); // write to eeprom
+        // vTaskDelay(1000 / portTICK_PERIOD_MS);
+        // eeprom_read(&read_buff, 0x00); // read from eeprom
+        // ESP_LOGI(TAG, "EEPROM read: %x", read_buff);
         vTaskDelay(1000 / portTICK_PERIOD_MS);
     }
 }
@@ -263,7 +264,7 @@ static void _i2c_read_task(void *p_parameter)
 
         vTaskDelay(1000 / portTICK_PERIOD_MS);
         light_read(&light, &white);
-        if (light > 4000) {
+        if (light > 1000) {
             xQueueSend(dark_queue, &light_command, 0);
         } else {
             xQueueSend(dark_queue, &dark_command, 0);
@@ -281,6 +282,10 @@ static void _dark_task(void *p_parameter)
     while (true) {
         xQueueReceive(dark_queue, &recived, portMAX_DELAY);
         if (recived == 1) {
+            light_amount = lv_slider_get_value(ui_SliderLight);
+            if (lights_mode == 1) {
+                led_on_pwm(LED_ID_BLUE, light_amount);
+            }
             // dark mode stuff
             lv_obj_set_style_bg_color(ui_HomeScreeen, lv_color_hex(0x360F5F),
                                       LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -289,11 +294,11 @@ static void _dark_task(void *p_parameter)
             lv_obj_set_style_bg_color(ui_Settings, lv_color_hex(0x360F5F),
                                       LV_PART_MAIN | LV_STATE_DEFAULT);
             ESP_LOGI(TAG, "Dark mode activated\n");
-            if (lights_mode == 1) {
-                // UPALI LEDICE
-            }
         } else if (recived == 2) {
             // light mode stuff
+            if (lights_mode == 1) {
+                led_off(LED_ID_BLUE);
+            }
             lv_obj_set_style_bg_color(ui_HomeScreeen, lv_color_hex(0xA6BDD2),
                                       LV_PART_MAIN | LV_STATE_DEFAULT);
             lv_obj_set_style_bg_color(ui_CarInfo, lv_color_hex(0xA6BDD2),
@@ -301,9 +306,6 @@ static void _dark_task(void *p_parameter)
             lv_obj_set_style_bg_color(ui_Settings, lv_color_hex(0xA6BDD2),
                                       LV_PART_MAIN | LV_STATE_DEFAULT);
             ESP_LOGI(TAG, "Light mode activated\n");
-            if (lights_mode == 1) {
-                // GASI LEDICE LEDICE
-            }
         }
         vTaskDelay(2500 / portTICK_PERIOD_MS);
     }
@@ -362,6 +364,16 @@ void app_init(void)
 
     wifi_init();
     ultrasonic_init();
+
+    eeprom_read(&lights_mode, 0x00);
+    eeprom_read(&light_amount, 0x10);
+    eeprom_read(&sound_amount, 0x20);
+    if (lights_mode > 2) {
+        lights_mode = 1;
+    }
+    ESP_LOGI(TAG, "EEPROM read mode: %x", lights_mode);
+    ESP_LOGI(TAG, "EEPROM read light amount: %x", light_amount);
+    ESP_LOGI(TAG, "EEPROM read sound amount: %x", sound_amount);
     // potencijalno ovo maknuti sve u _app_task() jer app_init()
     // runna na core 1 skupa s GUI, a zelimo da sve ostalo radi na
     // core 0. U testiranju cini se da init moze biti ovjde i da je

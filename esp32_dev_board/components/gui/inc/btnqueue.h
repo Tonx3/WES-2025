@@ -18,10 +18,6 @@
 /*--------------------------- MACROS AND DEFINES -----------------------------*/
 /*--------------------------- TYPEDEFS AND STRUCTS ---------------------------*/
 enum all_btns {
-    BTN_UP,
-    BTN_RIGHT,
-    BTN_DOWN,
-    BTN_LEFT,
     BTN_PROV,  // WiFi provisioning
     BTN_CONN,  // WiFi connect
     BTN_PARK,  // Park mode
@@ -35,10 +31,6 @@ enum all_btns {
 };
 /*--------------------------- EXTERN -----------------------------------------*/
 extern QueueHandle_t btn_queue;
-extern const int btn_up;
-extern const int btn_right;
-extern const int btn_down;
-extern const int btn_left;
 extern const int btn_prov;
 extern const int btn_conn;
 extern const int btn_park;
@@ -49,7 +41,9 @@ extern const int btn_home;
 extern const int btn_rblink;
 extern const int btn_lblink;
 extern const int btn_light;
-extern uint8_t lights_mode;
+extern volatile uint8_t lights_mode;
+extern volatile uint8_t light_amount;
+extern volatile uint8_t sound_amount;
 /*--------------------------- GLOBAL FUNCTION PROTOTYPES ---------------------*/
 void init_button_queue();
 void _button_task(void *p_parameter);
