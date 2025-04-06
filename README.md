@@ -82,17 +82,23 @@ Svi switchevi trebali bi biti u ON poziciji osim:
 
 
 **Home screen** 
-    - sadrzi 6 gumbi 
-    - PARKING MODE - prebacuje na ekran gdje je prikaz snimke stražnje kamere
-    - WIFI - short press - WiFi Connect
-    - long press - Wifi Provisioning 
-    - SETTINGS - mogućnosti paljenje desne i lijeve LEDice (efektivno žmigavaca), mode za svjetla (AUTO, ON, OFF), podesavanje jacine LED_B (headlight) svijetla 
-    - Save and Exit gumb - spremaju postavke jacine svjetla, mode za svjetlo i jacina zvuka
-    - CAR INFO - vrijednosti brzine u km/h - BRZINA SE MOZE SMANJIVATI/POVECAVATI pomocu potenciometra
-    - vrijednost prijeđene udaljenosti koja je izracunata preko brzine i vremena
-    - vrijednosti tilt-a i incline-a dobivene preko akcelerometra
-    - MUSIC - klikom na gumb svira par sekundi muziku OIIA OIIA
-    - MAPS - prebacuje na ekran prikaza karte
+- sadrzi 6 gumbi 
+1. PARKING MODE 
+- prebacuje na ekran gdje je prikaz snimke stražnje kamere
+2. WIFI
+- short press - WiFi Connect
+- long press - Wifi Provisioning 
+3. SETTINGS 
+- mogućnosti paljenje desne i lijeve LEDice (efektivno žmigavaca), mode za svjetla (AUTO, ON, OFF), podesavanje jacine LED_B (headlight) svijetla 
+- Save and Exit gumb - spremaju postavke jacine svjetla, mode za svjetlo i jacina zvuka
+4. CAR INFO 
+- vrijednosti brzine u km/h - BRZINA SE MOZE SMANJIVATI/POVECAVATI pomocu potenciometra
+- vrijednost prijeđene udaljenosti koja je izracunata preko brzine i vremena
+- vrijednosti tilt-a i incline-a dobivene preko akcelerometra
+5. MUSIC 
+- klikom na gumb svira par sekundi muziku OIIA OIIA
+6. MAPS 
+- prebacuje na ekran prikaza karte
 
 
                          
