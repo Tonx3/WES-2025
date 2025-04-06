@@ -55,6 +55,8 @@ static void _ir_read_task(void *p_parameter);
 /*--------------------------- VARIABLES --------------------------------------*/
 static const char *TAG = "app";
 static char temp_str[32];
+static char time_str[32];
+static char date_str[32];
 static char hum_str[32];
 QueueHandle_t music_queue;
 int music_command = 1;
@@ -102,8 +104,18 @@ static void _time_task(void *p_parameter)
     char strftime_buf[64];
     uint32_t curr_time = 0;
     while (true) {
+        // Thu Jan  1 00:00:08 1970
         get_current_time(strftime_buf, &curr_time);
         ESP_LOGI(TAG, "Current time is: %ld = %s\n", curr_time, strftime_buf);
+        strncpy(time_str, &strftime_buf[11], 8); // copy "00:00:08"
+        time_str[8] = '\0';
+        lv_label_set_text(ui_TimeLabel, time_str);
+        // Extract date "Thu Jan  1" and add space + year
+        strncpy(date_str, &strftime_buf[0], 10);
+        date_str[10] = '\0';
+        strncat(date_str, " ", sizeof(date_str) - strlen(date_str) - 1);
+        strncat(date_str, &strftime_buf[20], 4); // Append "1970"
+        lv_label_set_text(ui_DateLabel, date_str);
         vTaskDelay(1000 / portTICK_PERIOD_MS);
     }
 }
@@ -168,7 +180,7 @@ static void _i2c_read_task(void *p_parameter)
         ESP_LOGI(TAG, "Temperature: %f, Humidity: %f\n", temp, humidity);
         snprintf(temp_str, sizeof(temp_str), "%.2f°C", temp);
         lv_label_set_text(ui_TempLabel, temp_str);
-        snprintf(hum_str, sizeof(hum_str), "%.2f°C", humidity);
+        snprintf(hum_str, sizeof(hum_str), "%.2f%%", humidity);
         lv_label_set_text(ui_HumidityLabel, hum_str);
 
         vTaskDelay(1000 / portTICK_PERIOD_MS);
