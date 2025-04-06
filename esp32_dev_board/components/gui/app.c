@@ -96,12 +96,6 @@ static void _buzzer_task(void *p_parameter)
             double distance;
             ultrasonic_measure_cm(&distance);
             ESP_LOGI(TAG, "Distance%.2f", distance);
-            int percentage = 0;
-            if (150 > distance) {
-                percentage = 50;
-            }
-            led_on_pwm(LED_ID_BUZZER, percentage);
-        } else {
             int percentage = 100;
             if (distance > 150) {
                 led_blinking(LED_ID_BUZZER, 100, false);
@@ -335,8 +329,8 @@ static void _music_task(void *p_parameter)
 static void leds_init()
 {
     led_init(LED_ID_BLUE);
-    // led_init(LED_ID_GREEN);
-    // led_init(LED_ID_RED);
+    led_init(LED_ID_GREEN);
+    led_init(LED_ID_RED);
     led_init(LED_ID_BUZZER);
 }
 /*--------------------------- GLOBAL FUNCTIONS -------------------------------*/

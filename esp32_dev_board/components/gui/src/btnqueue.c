@@ -70,22 +70,6 @@ void _button_task(void *p_parameter)
     for (;;) {
         xQueueReceive(btn_queue, &pressed_button, portMAX_DELAY);
         switch (pressed_button) {
-        case BTN_UP :
-            // TODO: handle up
-            break;
-
-        case BTN_RIGHT :
-            // TODO: handle right
-            break;
-
-        case BTN_DOWN :
-            // TODO: handle down
-            break;
-
-        case BTN_LEFT :
-            // TODO: handle left
-            break;
-
         case BTN_PROV :
             if (!wifi_is_connected) {
                 ESP_LOGI(TAG, "WiFi provisioning button pressed");
@@ -140,9 +124,31 @@ void _button_task(void *p_parameter)
             break;
         case BTN_RBLINK :
             // upali ledicu na 3sec
+            static bool r_blinking=false;
+            ESP_LOGI("BTN_QUEUE", "INSIDE RIGHT BLINK");
+            if(!r_blinking)
+            {
+                ESP_LOGI("BTN_QUEUE", "STARTING RIGHT BLINK");
+                led_blinking(LED_ID_RBLINK, 400, true);
+            }
+            else
+            {
+                led_blinking(LED_ID_RBLINK, 400, false);
+            }
             break;
         case BTN_LBLINK :
             // upali ledicu na 3sec
+            static bool l_blinking=false;
+            ESP_LOGI("BTN_QUEUE", "INSIDE LEFT BLINK");
+            if(!l_blinking)
+            {
+                ESP_LOGI("BTN_QUEUE", "STARTING LEFT BLINK");
+                led_blinking(LED_ID_LBLINK, 400, true);
+            }
+            else
+            {
+                led_blinking(LED_ID_LBLINK, 400, false);
+            }
             break;
         case BTN_LIGHT :
             if (lights_mode == 1) {

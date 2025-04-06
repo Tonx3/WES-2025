@@ -14,8 +14,8 @@
 #include "esp_err.h"
 /*--------------------------- MACROS AND DEFINES -----------------------------*/
 #define GPIO_LED_BLUE  14
-#define GPIO_LED_GREEN 27
-#define GPIO_LED_RED   26
+#define GPIO_LED_GREEN 33
+#define GPIO_LED_RED   32
 #define GPIO_BUZZER    2
 
 #define LEDC_TIMER          LEDC_TIMER_0        // isti timer za sve
@@ -29,6 +29,10 @@
 #define LED_ID_GREEN  1
 #define LED_ID_RED    2
 #define LED_ID_BUZZER 3
+
+#define LED_ID_RBLINK LED_ID_GREEN
+#define LED_ID_LBLINK LED_ID_RED
+
 
 #define LEDC_DUTY_RES  LEDC_TIMER_13_BIT // Set duty resolution to 13 bits
 #define LEDC_DUTY      (8191) // ((2 ** 13) - 1) = 8191 full cycle , 4095 is 50%
