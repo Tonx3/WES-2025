@@ -76,11 +76,13 @@ Svi switchevi trebali bi biti u ON poziciji osim:
 - Ulaz u pojacalo (bijela zica) -> BTN_4
 - Potenciometar (zelena zica) -> JOY_x
 
-5. User interface
+## User interface
 - sadrzi je ukupno 5 razlicitih screenova
 - preko ambient light senzora implementirano je switchanje na DARK_MODE kada svjetlost u prostoriji padne ispod određene razine
+
+
 **Home screen** 
-- sadrzi 6 gumbi 
+    - sadrzi 6 gumbi 
     - PARKING MODE - prebacuje na ekran gdje je prikaz snimke stražnje kamere
     - WIFI - short press - WiFi Connect
     - long press - Wifi Provisioning 
