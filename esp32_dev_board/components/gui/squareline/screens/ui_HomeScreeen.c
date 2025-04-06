@@ -134,19 +134,6 @@ void ui_HomeScreeen_screen_init(void)
     lv_obj_set_style_bg_color(ui_Image5, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_bg_opa(ui_Image5, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
 
-    ui_TurnOff = lv_btn_create(ui_HomeScreeen);
-    lv_obj_set_width(ui_TurnOff, 60);
-    lv_obj_set_height(ui_TurnOff, 60);
-    lv_obj_set_x(ui_TurnOff, 75);
-    lv_obj_set_y(ui_TurnOff, 80);
-    lv_obj_set_align(ui_TurnOff, LV_ALIGN_CENTER);
-    lv_obj_add_flag(ui_TurnOff, LV_OBJ_FLAG_SCROLL_ON_FOCUS);     /// Flags
-    lv_obj_clear_flag(ui_TurnOff, LV_OBJ_FLAG_SCROLLABLE);      /// Flags
-    lv_obj_set_style_bg_color(ui_TurnOff, lv_color_hex(0x969DD1), LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_bg_opa(ui_TurnOff, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_clip_corner(ui_TurnOff, true, LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_bg_img_opa(ui_TurnOff, 200, LV_PART_MAIN | LV_STATE_DEFAULT);
-
     ui_TimeLabel = lv_label_create(ui_HomeScreeen);
     lv_obj_set_width(ui_TimeLabel, LV_SIZE_CONTENT);   /// 1
     lv_obj_set_height(ui_TimeLabel, LV_SIZE_CONTENT);    /// 1
@@ -188,10 +175,37 @@ void ui_HomeScreeen_screen_init(void)
     lv_obj_set_style_text_color(ui_HumidityLabel, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_opa(ui_HumidityLabel, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
 
+    ui_Maps = lv_btn_create(ui_HomeScreeen);
+    lv_obj_set_width(ui_Maps, 60);
+    lv_obj_set_height(ui_Maps, 60);
+    lv_obj_set_x(ui_Maps, 74);
+    lv_obj_set_y(ui_Maps, 80);
+    lv_obj_set_align(ui_Maps, LV_ALIGN_CENTER);
+    lv_obj_add_flag(ui_Maps, LV_OBJ_FLAG_SCROLL_ON_FOCUS);     /// Flags
+    lv_obj_clear_flag(ui_Maps, LV_OBJ_FLAG_SCROLLABLE);      /// Flags
+    lv_obj_set_style_bg_color(ui_Maps, lv_color_hex(0x969DD1), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_bg_opa(ui_Maps, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_clip_corner(ui_Maps, true, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_bg_img_opa(ui_Maps, 200, LV_PART_MAIN | LV_STATE_DEFAULT);
+
+    ui_Image6 = lv_img_create(ui_Maps);
+    lv_img_set_src(ui_Image6, &ui_img_2008805362);
+    lv_obj_set_width(ui_Image6, LV_SIZE_CONTENT);   /// 1
+    lv_obj_set_height(ui_Image6, LV_SIZE_CONTENT);    /// 1
+    lv_obj_set_x(ui_Image6, 0);
+    lv_obj_set_y(ui_Image6, 1);
+    lv_obj_set_align(ui_Image6, LV_ALIGN_CENTER);
+    lv_obj_add_flag(ui_Image6, LV_OBJ_FLAG_ADV_HITTEST);     /// Flags
+    lv_obj_clear_flag(ui_Image6, LV_OBJ_FLAG_SCROLLABLE);      /// Flags
+    lv_img_set_zoom(ui_Image6, 280);
+    lv_obj_set_style_bg_color(ui_Image6, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_bg_opa(ui_Image6, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
+
     lv_obj_add_event_cb(ui_ParkButton, ui_event_ParkButton, LV_EVENT_ALL, NULL);
     lv_obj_add_event_cb(ui_WiFiButton, ui_event_WiFiButton, LV_EVENT_ALL, NULL);
     lv_obj_add_event_cb(ui_SettingsButton, ui_event_SettingsButton, LV_EVENT_ALL, NULL);
     lv_obj_add_event_cb(ui_MusicButton, ui_event_MusicButton, LV_EVENT_ALL, NULL);
     lv_obj_add_event_cb(ui_DrivingInfo, ui_event_DrivingInfo, LV_EVENT_ALL, NULL);
+    lv_obj_add_event_cb(ui_Maps, ui_event_Maps, LV_EVENT_ALL, NULL);
 
 }

@@ -13,8 +13,30 @@ void ui_ParkMode_screen_init(void)
     ui_CamImage = lv_img_create(ui_ParkMode);
     lv_obj_set_width(ui_CamImage, LV_SIZE_CONTENT);   /// 1
     lv_obj_set_height(ui_CamImage, LV_SIZE_CONTENT);    /// 1
+    lv_obj_set_x(ui_CamImage, -4);
+    lv_obj_set_y(ui_CamImage, 4);
     lv_obj_set_align(ui_CamImage, LV_ALIGN_CENTER);
     lv_obj_add_flag(ui_CamImage, LV_OBJ_FLAG_ADV_HITTEST);     /// Flags
     lv_obj_clear_flag(ui_CamImage, LV_OBJ_FLAG_SCROLLABLE);      /// Flags
+    lv_img_set_zoom(ui_CamImage, 500);
+
+    ui_Homepark = lv_btn_create(ui_ParkMode);
+    lv_obj_set_width(ui_Homepark, 60);
+    lv_obj_set_height(ui_Homepark, 40);
+    lv_obj_set_x(ui_Homepark, -115);
+    lv_obj_set_y(ui_Homepark, -74);
+    lv_obj_set_align(ui_Homepark, LV_ALIGN_CENTER);
+    lv_obj_add_flag(ui_Homepark, LV_OBJ_FLAG_SCROLL_ON_FOCUS);     /// Flags
+    lv_obj_clear_flag(ui_Homepark, LV_OBJ_FLAG_SCROLLABLE);      /// Flags
+    lv_obj_set_style_bg_color(ui_Homepark, lv_color_hex(0x5275A1), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_bg_opa(ui_Homepark, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
+
+    ui_HomeParkLabel = lv_label_create(ui_Homepark);
+    lv_obj_set_width(ui_HomeParkLabel, LV_SIZE_CONTENT);   /// 1
+    lv_obj_set_height(ui_HomeParkLabel, LV_SIZE_CONTENT);    /// 1
+    lv_obj_set_align(ui_HomeParkLabel, LV_ALIGN_CENTER);
+    lv_label_set_text(ui_HomeParkLabel, "Home");
+
+    lv_obj_add_event_cb(ui_Homepark, ui_event_Homepark, LV_EVENT_ALL, NULL);
 
 }

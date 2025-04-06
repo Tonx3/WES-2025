@@ -2,6 +2,7 @@ SET(SOURCES screens/ui_HomeScreeen.c
     screens/ui_ParkMode.c
     screens/ui_Settings.c
     screens/ui_CarInfo.c
+    screens/ui_MapScreen.c
     ui.c
     components/ui_comp_hook.c
     ui_helpers.c
@@ -10,6 +11,8 @@ SET(SOURCES screens/ui_HomeScreeen.c
     images/ui_img_1548857385.c
     images/ui_img_1896724463.c
     images/ui_img_1924809568.c
-    images/ui_img_1600593050.c)
+    images/ui_img_1600593050.c
+    images/ui_img_2008805362.c
+    images/ui_img_maps_1_png.c)
 
 add_library(ui ${SOURCES})
