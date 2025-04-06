@@ -72,7 +72,6 @@ int buzzer_disable_command = 1;
 QueueHandle_t dark_queue;
 int dark_command = 1;
 int light_command = 2;
-static uint8_t lights_mode = 1; // 0 - off, 1 - automatic, 2 - on
 static bool isParkMode;
 /*--------------------------- STATIC FUNCTIONS -------------------------------*/
 static void _buzzer_task(void *p_parameter)
@@ -86,34 +85,32 @@ static void _buzzer_task(void *p_parameter)
         if (received == 1) {
             buzzer_active = true;
             ESP_LOGI(TAG, "Buzzer ON\n");
-        } else if(received == 2)
-        {
+        } else if (received == 2) {
             buzzer_active = false;
             ESP_LOGI(TAG, "Buzzer OFF\n");
         } else {
             ESP_LOGI(TAG, "Unknown command\n");
         }
 
-        if(buzzer_active)
-        {
+        if (buzzer_active) {
             double distance;
             ultrasonic_measure_cm(&distance);
             ESP_LOGI(TAG, "Distance%.2f", distance);
+            int percentage = 0;
+            if (150 > distance) {
+                percentage = 50;
+            }
+            led_on_pwm(LED_ID_BUZZER, percentage);
+        } else {
             int percentage = 100;
-            if(distance>150)
-            {
+            if (distance > 150) {
                 led_blinking(LED_ID_BUZZER, 100, false);
                 led_on_pwm(LED_ID_BUZZER, 0);
-                
-            }
-            else if(distance < 150 && distance > 50)
-            {
+
+            } else if (distance < 150 && distance > 50) {
                 percentage = 400;
                 led_blinking(LED_ID_BUZZER, percentage, true);
-            }
-            else if(distance<50)
-            {
-                
+            } else if (distance < 50) {
                 percentage = 250;
                 led_blinking(LED_ID_BUZZER, percentage, true);
             }
