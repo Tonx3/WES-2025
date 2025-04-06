@@ -27,6 +27,7 @@
 #include "mqtt_driver.h"
 #include "wifi.h"
 #define LOG_LOCAL_LEVEL ESP_LOG_VERBOSE
+#include "btnqueue.h"
 #include "esp_log.h"
 #include "i2c.h"
 #include "i2s.h"
@@ -52,6 +53,8 @@ static void _pot_read_task(void *p_parameter);
 static void _ir_read_task(void *p_parameter);
 /*--------------------------- VARIABLES --------------------------------------*/
 static const char *TAG = "app";
+static char temp_str[32];
+static char hum_str[32];
 /*--------------------------- STATIC FUNCTIONS -------------------------------*/
 static void _ir_read_task(void *p_parameter)
 {
@@ -160,6 +163,11 @@ static void _i2c_read_task(void *p_parameter)
         vTaskDelay(1000 / portTICK_PERIOD_MS);
         temphum_read(&temp, &humidity);
         ESP_LOGI(TAG, "Temperature: %f, Humidity: %f\n", temp, humidity);
+        snprintf(temp_str, sizeof(temp_str), "%.2f°C", temp);
+        lv_label_set_text(ui_TempLabel, temp_str);
+        snprintf(hum_str, sizeof(hum_str), "%.2f°C", humidity);
+        lv_label_set_text(ui_HumidityLabel, hum_str);
+
         vTaskDelay(1000 / portTICK_PERIOD_MS);
         light_read(&light, &white);
         ESP_LOGI(TAG, "Light: %d, White: %d\n", light, white);
@@ -180,7 +188,7 @@ void app_init(void)
 {
     ui_init();
     leds_init();
-    acc_init();
+    // acc_init();
 
     if (pot_init() != 0) {
         ESP_LOGE(TAG, "Unable to init adc pot");
@@ -191,8 +199,8 @@ void app_init(void)
         return;
     }
 
-    int acc_whoami = dummy_read();
-    ESP_LOGI("TAG", "Acc who am I: 0x%x", acc_whoami);
+    //  int acc_whoami = dummy_read();
+    //  ESP_LOGI("TAG", "Acc who am I: 0x%x", acc_whoami);
     if (joy_init() != 0) {
         ESP_LOGE(TAG, "Unable to init adc");
         return;
@@ -210,11 +218,13 @@ void app_init(void)
     // taska na core 0
     xTaskCreatePinnedToCore(_app_task, "app", 4096, NULL, 0, NULL, 0);
     xTaskCreatePinnedToCore(_i2c_read_task, "i2c_read", 4096, NULL, 0, NULL, 0);
-    xTaskCreatePinnedToCore(_accelerometer_task, "accelerometer", 4096, NULL, 0,
-                            NULL, 0);
+    //  xTaskCreatePinnedToCore(_accelerometer_task, "accelerometer", 4096,
+    //  NULL, 0,
+    //                         NULL, 0);
     xTaskCreatePinnedToCore(_time_task, "time", 4096, NULL, 0, NULL, 0);
     xTaskCreatePinnedToCore(_ultrasonic_task, "ultrasonic", 4096, NULL, 0, NULL,
                             0);
     xTaskCreatePinnedToCore(_pot_read_task, "pot", 4096, NULL, 0, NULL, 0);
     xTaskCreatePinnedToCore(_ir_read_task, "ir", 4096, NULL, 0, NULL, 0);
+    xTaskCreatePinnedToCore(_button_task, "ir", 4096, NULL, 0, NULL, 0);
 }

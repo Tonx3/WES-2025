@@ -3,39 +3,33 @@
 // LVGL version: 8.3.6
 // Project name: hackathon25
 
+#include "btnqueue.h"
+#include "freertos/FreeRTOS.h"
+#include "freertos/queue.h"
+#include "freertos/task.h"
 #include "ui.h"
 
-void MusicEventCallback(lv_event_t * e)
+void ParkButtonCb(lv_event_t *e)
 {
-	// Your code here
+    xQueueSendFromISR(btn_queue, &btn_park, pdFALSE);
 }
 
-void WiFiProvEvent(lv_event_t * e)
+void WifiConnectCb(lv_event_t *e)
 {
-	// Your code here
+    xQueueSendFromISR(btn_queue, &btn_conn, pdFALSE);
 }
 
-void ParkButtonCb(lv_event_t * e)
+void WifiProvisionCb(lv_event_t *e)
 {
-	// Your code here
+    xQueueSendFromISR(btn_queue, &btn_prov, pdFALSE);
 }
 
-void WifiConnectCb(lv_event_t * e)
+void MusicButtonCb(lv_event_t *e)
 {
-	// Your code here
+    xQueueSendFromISR(btn_queue, &btn_music, pdFALSE);
 }
 
-void WifiProvisionCb(lv_event_t * e)
+void SaveButtonCb(lv_event_t *e)
 {
-	// Your code here
-}
-
-void MusicButtonCb(lv_event_t * e)
-{
-	// Your code here
-}
-
-void SaveButtonCb(lv_event_t * e)
-{
-	// Your code here
+    xQueueSendFromISR(btn_queue, &btn_save, pdFALSE);
 }
