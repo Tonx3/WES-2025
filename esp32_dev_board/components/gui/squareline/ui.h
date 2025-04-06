@@ -42,10 +42,10 @@ extern lv_obj_t * ui_Image6;
 // SCREEN: ui_ParkMode
 void ui_ParkMode_screen_init(void);
 extern lv_obj_t * ui_ParkMode;
-extern lv_obj_t * ui_CamImage;
 void ui_event_Homepark(lv_event_t * e);
 extern lv_obj_t * ui_Homepark;
 extern lv_obj_t * ui_HomeParkLabel;
+extern lv_obj_t * ui_ReverseCam;
 // SCREEN: ui_Settings
 void ui_Settings_screen_init(void);
 extern lv_obj_t * ui_Settings;
@@ -93,6 +93,7 @@ LV_IMG_DECLARE(ui_img_1896724463);    // assets\setting_7518375 (1).png
 LV_IMG_DECLARE(ui_img_1924809568);    // assets\itunes_1384045 (1).png
 LV_IMG_DECLARE(ui_img_1600593050);    // assets\car-parking_3555291 (1).png
 LV_IMG_DECLARE(ui_img_2008805362);    // assets\location_15917865 (1).png
+LV_IMG_DECLARE(ui_img_1599370223);    // assets\reverse_park (1).png
 LV_IMG_DECLARE(ui_img_maps_1_png);    // assets\maps_1.png
 
 

@@ -39,10 +39,10 @@ lv_obj_t * ui_Image6;
 // SCREEN: ui_ParkMode
 void ui_ParkMode_screen_init(void);
 lv_obj_t * ui_ParkMode;
-lv_obj_t * ui_CamImage;
 void ui_event_Homepark(lv_event_t * e);
 lv_obj_t * ui_Homepark;
 lv_obj_t * ui_HomeParkLabel;
+lv_obj_t * ui_ReverseCam;
 
 
 // SCREEN: ui_Settings
