@@ -70,6 +70,8 @@ extern lv_obj_t * ui_InclineNum;
 void ui_event_CarInfoBackButton(lv_event_t * e);
 extern lv_obj_t * ui_CarInfoBackButton;
 extern lv_obj_t * ui_InfoBackLabel;
+extern lv_obj_t * ui_SpeedLabel;
+extern lv_obj_t * ui_Distance_Label;
 // SCREEN: ui_MapScreen
 void ui_MapScreen_screen_init(void);
 extern lv_obj_t * ui_MapScreen;

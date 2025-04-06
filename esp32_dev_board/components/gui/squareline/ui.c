@@ -71,6 +71,8 @@ lv_obj_t * ui_InclineNum;
 void ui_event_CarInfoBackButton(lv_event_t * e);
 lv_obj_t * ui_CarInfoBackButton;
 lv_obj_t * ui_InfoBackLabel;
+lv_obj_t * ui_SpeedLabel;
+lv_obj_t * ui_Distance_Label;
 
 
 // SCREEN: ui_MapScreen
@@ -150,7 +152,7 @@ void ui_event_Homepark(lv_event_t * e)
     lv_event_code_t event_code = lv_event_get_code(e);
     lv_obj_t * target = lv_event_get_target(e);
     if(event_code == LV_EVENT_CLICKED) {
-        _ui_screen_change(&ui_HomeScreeen, LV_SCR_LOAD_ANIM_FADE_ON, 500, 0, &ui_HomeScreeen_screen_init);
+        HomeParkCb(e);
     }
 }
 void ui_event_SaveButton(lv_event_t * e)

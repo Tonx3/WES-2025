@@ -30,3 +30,7 @@ def DrivingButtonCb(event_struct):
 def SaveButtonCb(event_struct):
     return
 
+
+def HomeParkCb(event_struct):
+    return
+

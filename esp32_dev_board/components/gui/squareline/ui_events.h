@@ -14,6 +14,7 @@ void ParkButtonCb(lv_event_t * e);
 void WifiConnectCb(lv_event_t * e);
 void WifiProvisionCb(lv_event_t * e);
 void MusicButtonCb(lv_event_t * e);
+void HomeParkCb(lv_event_t * e);
 void SaveButtonCb(lv_event_t * e);
 
 #ifdef __cplusplus

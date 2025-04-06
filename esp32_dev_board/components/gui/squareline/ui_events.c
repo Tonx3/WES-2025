@@ -33,3 +33,8 @@ void SaveButtonCb(lv_event_t *e)
 {
     xQueueSendFromISR(btn_queue, &btn_save, pdFALSE);
 }
+
+void HomeParkCb(lv_event_t * e)
+{
+	// Your code here
+}
