@@ -10,6 +10,7 @@
 #include "app.h"
 #include "esp_timer.h"
 #include "freertos/FreeRTOS.h"
+#include "freertos/queue.h"
 #include "freertos/task.h"
 #include <math.h>
 #include <stdio.h>
@@ -55,6 +56,8 @@ static void _ir_read_task(void *p_parameter);
 static const char *TAG = "app";
 static char temp_str[32];
 static char hum_str[32];
+QueueHandle_t music_queue;
+int music_command = 1;
 /*--------------------------- STATIC FUNCTIONS -------------------------------*/
 static void _ir_read_task(void *p_parameter)
 {
@@ -175,6 +178,23 @@ static void _i2c_read_task(void *p_parameter)
     }
 }
 
+static void _music_task(void *p_parameter)
+{
+    (void)p_parameter;
+    int recived = 0;
+    music_queue = xQueueCreate(1, sizeof(int));
+    while (true) {
+        xQueueReceive(music_queue, &recived, portMAX_DELAY);
+        if (recived == 1) {
+            ESP_LOGI(TAG, "Music play\n");
+            play_audio();
+        } else {
+            ESP_LOGI(TAG, "Unknown command\n");
+        }
+        vTaskDelay(3000 / portTICK_PERIOD_MS);
+    }
+}
+
 static void leds_init()
 {
     led_init(LED_ID_BLUE);
@@ -227,4 +247,5 @@ void app_init(void)
     xTaskCreatePinnedToCore(_pot_read_task, "pot", 4096, NULL, 0, NULL, 0);
     xTaskCreatePinnedToCore(_ir_read_task, "ir", 4096, NULL, 0, NULL, 0);
     xTaskCreatePinnedToCore(_button_task, "ir", 4096, NULL, 0, NULL, 0);
+    xTaskCreatePinnedToCore(_music_task, "music", 4096, NULL, 0, NULL, 0);
 }

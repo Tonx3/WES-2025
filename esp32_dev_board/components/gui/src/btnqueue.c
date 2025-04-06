@@ -112,7 +112,7 @@ void _button_task(void *p_parameter)
             break;
 
         case BTN_MUSIC :
-
+            xQueueSend(music_queue, &music_command, 0);
             break;
 
         default :
