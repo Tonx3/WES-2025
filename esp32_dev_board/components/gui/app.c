@@ -234,6 +234,10 @@ static void _accelerometer_task(void *p_parameter)
         } else {
             led_off(LED_ID_BUZZER); // mozda makni kasnije
         }
+        snprintf(temp_str, sizeof(temp_str), "%.2f", tilt_x_deg);
+        lv_label_set_text(ui_TiltNum, temp_str);
+        snprintf(temp_str, sizeof(temp_str), "%.2f", tilt_z_deg);
+        lv_label_set_text(ui_InclineNum, temp_str);
 
         ESP_LOGI(TAG,
                  "X: %f, Y: %f, Z: %f | Tilt X: %.2f° (%.1f%%), Z: %.2f° "
@@ -241,7 +245,7 @@ static void _accelerometer_task(void *p_parameter)
                  fx, fy, fz, tilt_x_deg, tilt_x_pct, tilt_z_deg, tilt_z_pct,
                  is_upright ? "  [UPRIGHT]" : "");
 
-        vTaskDelay(500 / portTICK_PERIOD_MS);
+        vTaskDelay(15000 / portTICK_PERIOD_MS);
     }
 }
 
@@ -341,7 +345,7 @@ void app_init(void)
 {
     ui_init();
     leds_init();
-    // acc_init();
+    acc_init();
 
     if (pot_init() != 0) {
         ESP_LOGE(TAG, "Unable to init adc pot");
@@ -352,8 +356,8 @@ void app_init(void)
         return;
     }
 
-    //  int acc_whoami = dummy_read();
-    //  ESP_LOGI("TAG", "Acc who am I: 0x%x", acc_whoami);
+    int acc_whoami = dummy_read();
+    ESP_LOGI("TAG", "Acc who am I: 0x%x", acc_whoami);
     if (joy_init() != 0) {
         ESP_LOGE(TAG, "Unable to init adc");
         return;
@@ -381,9 +385,8 @@ void app_init(void)
     // taska na core 0
     xTaskCreatePinnedToCore(_app_task, "app", 4096, NULL, 0, NULL, 0);
     xTaskCreatePinnedToCore(_i2c_read_task, "i2c_read", 4096, NULL, 0, NULL, 0);
-    //  xTaskCreatePinnedToCore(_accelerometer_task, "accelerometer", 4096,
-    //  NULL, 0,
-    //                         NULL, 0);
+    xTaskCreatePinnedToCore(_accelerometer_task, "accelerometer", 4096, NULL, 0,
+                            NULL, 0);
     xTaskCreatePinnedToCore(_time_task, "time", 4096, NULL, 0, NULL, 0);
     xTaskCreatePinnedToCore(_ultrasonic_task, "ultrasonic", 4096, NULL, 0, NULL,
                             0);
