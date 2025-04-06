@@ -47,6 +47,7 @@
 static void _app_task(void *p_parameter);
 static void leds_init();
 static void _i2c_read_task(void *p_parameter);
+static void _dark_task(void *p_parameter);
 static void _accelerometer_task(void *p_parameter);
 static void _time_task(void *p_parameter);
 static void _ultrasonic_task(void *p_parameter);
@@ -60,13 +61,17 @@ static char date_str[32];
 static char hum_str[32];
 QueueHandle_t music_queue;
 int music_command = 1;
+QueueHandle_t dark_queue;
+int dark_command = 1;
+int light_command = 2;
+static uint8_t lights_mode = 1; // 0 - off, 1 - automatic, 2 - on
 /*--------------------------- STATIC FUNCTIONS -------------------------------*/
 static void _ir_read_task(void *p_parameter)
 {
     while (true) {
         int val = ir_read();
         ESP_LOGI(TAG, "IR sensor reading:  %d", val);
-        vTaskDelay(333 / portTICK_PERIOD_MS);
+        vTaskDelay(3330 / portTICK_PERIOD_MS);
     }
 }
 
@@ -75,7 +80,7 @@ static void _pot_read_task(void *p_parameter)
     while (true) {
         int val = pot_read();
         ESP_LOGI(TAG, "Potentiometer reading:  %d", val);
-        vTaskDelay(333 / portTICK_PERIOD_MS);
+        vTaskDelay(3330 / portTICK_PERIOD_MS);
     }
 }
 
@@ -85,7 +90,7 @@ static void _ultrasonic_task(void *p_parameter)
         double distance;
         ultrasonic_measure_cm(&distance);
         ESP_LOGI(TAG, "Ultrasonic reading... distance: %lf cm\n\n", distance);
-        vTaskDelay(333 / portTICK_PERIOD_MS);
+        vTaskDelay(3330 / portTICK_PERIOD_MS);
     }
 }
 
@@ -107,7 +112,7 @@ static void _time_task(void *p_parameter)
         // Thu Jan  1 00:00:08 1970
         get_current_time(strftime_buf, &curr_time);
         ESP_LOGI(TAG, "Current time is: %ld = %s\n", curr_time, strftime_buf);
-        strncpy(time_str, &strftime_buf[11], 8); // copy "00:00:08"
+        strncpy(time_str, &strftime_buf[11], 5); // copy "00:00"
         time_str[8] = '\0';
         lv_label_set_text(ui_TimeLabel, time_str);
         // Extract date "Thu Jan  1" and add space + year
@@ -116,7 +121,7 @@ static void _time_task(void *p_parameter)
         strncat(date_str, " ", sizeof(date_str) - strlen(date_str) - 1);
         strncat(date_str, &strftime_buf[20], 4); // Append "1970"
         lv_label_set_text(ui_DateLabel, date_str);
-        vTaskDelay(1000 / portTICK_PERIOD_MS);
+        vTaskDelay(30000 / portTICK_PERIOD_MS);
     }
 }
 
@@ -185,8 +190,49 @@ static void _i2c_read_task(void *p_parameter)
 
         vTaskDelay(1000 / portTICK_PERIOD_MS);
         light_read(&light, &white);
+        if (light > 4000) {
+            xQueueSend(dark_queue, &light_command, 0);
+        } else {
+            xQueueSend(dark_queue, &dark_command, 0);
+        }
         ESP_LOGI(TAG, "Light: %d, White: %d\n", light, white);
         vTaskDelay(1000 / portTICK_PERIOD_MS);
+    }
+}
+
+static void _dark_task(void *p_parameter)
+{
+    (void)p_parameter;
+    int recived = 0;
+    dark_queue = xQueueCreate(1, sizeof(int));
+    while (true) {
+        xQueueReceive(dark_queue, &recived, portMAX_DELAY);
+        if (recived == 1) {
+            // dark mode stuff
+            lv_obj_set_style_bg_color(ui_HomeScreeen, lv_color_hex(0x360F5F),
+                                      LV_PART_MAIN | LV_STATE_DEFAULT);
+            lv_obj_set_style_bg_color(ui_CarInfo, lv_color_hex(0x360F5F),
+                                      LV_PART_MAIN | LV_STATE_DEFAULT);
+            lv_obj_set_style_bg_color(ui_Settings, lv_color_hex(0x360F5F),
+                                      LV_PART_MAIN | LV_STATE_DEFAULT);
+            ESP_LOGI(TAG, "Dark mode activated\n");
+            if (lights_mode == 1) {
+                // UPALI LEDICE
+            }
+        } else if (recived == 2) {
+            // light mode stuff
+            lv_obj_set_style_bg_color(ui_HomeScreeen, lv_color_hex(0xA6BDD2),
+                                      LV_PART_MAIN | LV_STATE_DEFAULT);
+            lv_obj_set_style_bg_color(ui_CarInfo, lv_color_hex(0xA6BDD2),
+                                      LV_PART_MAIN | LV_STATE_DEFAULT);
+            lv_obj_set_style_bg_color(ui_Settings, lv_color_hex(0xA6BDD2),
+                                      LV_PART_MAIN | LV_STATE_DEFAULT);
+            ESP_LOGI(TAG, "Light mode activated\n");
+            if (lights_mode == 1) {
+                // GASI LEDICE LEDICE
+            }
+        }
+        vTaskDelay(5000 / portTICK_PERIOD_MS);
     }
 }
 
@@ -258,6 +304,7 @@ void app_init(void)
                             0);
     xTaskCreatePinnedToCore(_pot_read_task, "pot", 4096, NULL, 0, NULL, 0);
     xTaskCreatePinnedToCore(_ir_read_task, "ir", 4096, NULL, 0, NULL, 0);
-    xTaskCreatePinnedToCore(_button_task, "ir", 4096, NULL, 0, NULL, 0);
+    xTaskCreatePinnedToCore(_button_task, "button", 4096, NULL, 0, NULL, 0);
     xTaskCreatePinnedToCore(_music_task, "music", 4096, NULL, 0, NULL, 0);
+    xTaskCreatePinnedToCore(_dark_task, "dark", 4096, NULL, 0, NULL, 0);
 }
